@@ -2,6 +2,7 @@ import axios from 'axios';
 import { addExpenseStart, addExpenseSuccess, loginStart, loginSuccess, registerStart, registerSuccess, removeExpenseStart, removeExpenseSuccess, logout as Logout } from './userSlice';
 import store from './store';
 import { populateAccount } from '../_mock/account'
+import { populateTransactions } from '../_mock/user';
 
 const API_URI = "https://fixed-sunny-wood.glitch.me/"
 
@@ -13,9 +14,21 @@ const userService = {
         const { user } = response.data;
         const { token } = response.data;
         store.dispatch(loginSuccess(user)); // dispatch login success action with user object
-        console.log(user, token)
+        console.log(user.expenses)
         populateAccount(user)
+        populateTransactions(user.expenses)
         return token;
+    },
+    async getUser(token) {
+        store.dispatch(loginStart())
+        const url = `${API_URI}getUser`
+        const response = await axios.post(url, { token });
+        const { user } = response.data;
+        const { Token } = response.data;
+        store.dispatch(loginSuccess(user)); // dispatch login success action with user object
+        populateAccount(user)
+        populateTransactions(user.expenses)
+        return Token;
     },
     async register(name, email, password, contact) {
         store.dispatch(registerStart())
