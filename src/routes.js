@@ -25,7 +25,7 @@ export default function Router() {
   const token = localStorage.getItem('token') ? localStorage.getItem('token').slice(1, -1) : null;
 
   useEffect(() => {
-    getUser(token)
+    if (token) getUser(token)
   }, [token]);
 
   const user = useSelector((state) => state.user.user);
