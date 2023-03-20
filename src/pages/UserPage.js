@@ -1,6 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 import { filter } from 'lodash';
 import { useState } from 'react';
+// import { Modal,ModalHeader,ModalBody } from "reactstrap";
 // @mui
 import {
   Card,
@@ -20,8 +21,11 @@ import {
   IconButton,
   TableContainer,
   TablePagination,
+  Modal
 } from '@mui/material';
 // components
+import { Box } from '@mui/system';
+// import Modal from '@mui/material';
 import Label from '../components/label';
 import Iconify from '../components/iconify';
 import Scrollbar from '../components/scrollbar';
@@ -86,6 +90,8 @@ export default function UserPage() {
   const [filterName, setFilterName] = useState('');
 
   const [rowsPerPage, setRowsPerPage] = useState(5);
+
+  const [openModal,setOpenModal]=useState(false);
 
   const handleOpenMenu = (event) => {
     setOpen(event.currentTarget);
@@ -156,14 +162,18 @@ export default function UserPage() {
           <Typography variant="h4" gutterBottom>
             Transactions
           </Typography>
-          <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />}>
+          <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />} onClick={()=>setOpenModal(true)}>
             New Transaction
           </Button>
+          <Modal hideBackdrop open={openModal} onClose={()=>setOpenModal(false)}>
+           <Box position="absolute" top="50%" left="50%">
+            <Typography>it is a modal</Typography>
+            <Button variant="contained" onClick={()=>setOpenModal(false)}>close</Button>
+           </Box>
+           </Modal>
         </Stack>
-
         <Card>
           <UserListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} />
-
           <Scrollbar>
             <TableContainer sx={{ minWidth: 800 }}>
               <Table>
