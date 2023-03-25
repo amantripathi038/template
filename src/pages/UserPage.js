@@ -1,6 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 import { filter } from 'lodash';
 import { useState } from 'react';
+
 // @mui
 import {
   Card,
@@ -22,6 +23,7 @@ import {
   TablePagination,
 } from '@mui/material';
 // components
+import Modal from "./Modal";
 import Label from '../components/label';
 import Iconify from '../components/iconify';
 import Scrollbar from '../components/scrollbar';
@@ -86,6 +88,9 @@ export default function UserPage() {
   const [filterName, setFilterName] = useState('');
 
   const [rowsPerPage, setRowsPerPage] = useState(5);
+
+  // const [showModal,setShowModal]=useState(false);
+  // const closeModal = () => setShowModal(false);
 
   const handleOpenMenu = (event) => {
     setOpen(event.currentTarget);
@@ -156,9 +161,11 @@ export default function UserPage() {
           <Typography variant="h4" gutterBottom>
             Transactions
           </Typography>
-          <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />}>
+          <Button className="model-btn" variant="contained" startIcon={<Iconify icon="eva:plus-fill" />}>
+          <Modal/>
             New Transaction
           </Button>
+          {/* {showModal && <MyModal closeModal={closeModal} />} */}
         </Stack>
 
         <Card>

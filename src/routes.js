@@ -10,7 +10,7 @@ import Page404 from './pages/Page404';
 import DashboardAppPage from './pages/DashboardAppPage';
 import RegisterPage from './pages/RegisterPage';
 import userService from './store/userService';
-
+import Modal from './pages/Modal';
 
 export default function Router() {
 
@@ -42,6 +42,7 @@ export default function Router() {
       >
         <Route path="app" element={<DashboardAppPage />} />
         <Route path="user" element={<UserPage />} />
+        <Route path="modal" element={<Modal />} />
       </Route>
 
       <Route path="/404" element={<Page404 />} />
