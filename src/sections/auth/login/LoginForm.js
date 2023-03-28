@@ -33,9 +33,8 @@ export default function LoginForm() {
       if (token) {
         if (rememberMe) {
           localStorage.setItem('token', JSON.stringify(token));
-        } else {
-          sessionStorage.setItem('token', JSON.stringify(token));
         }
+        sessionStorage.setItem('token', JSON.stringify(token));
         navigate('/dashboard/app', { replace: true });
       }
     } catch (error) {

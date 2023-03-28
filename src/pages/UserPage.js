@@ -9,19 +9,27 @@ import {
   Paper,
   Avatar,
   Button,
-  Popover,
+  // Popover,
   Checkbox,
   TableRow,
-  MenuItem,
+  // MenuItem,
   TableBody,
   TableCell,
   Container,
   Typography,
-  IconButton,
+  // IconButton,
   TableContainer,
   TablePagination,
+  Dialog,
+  DialogActions,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  TextField,
 } from '@mui/material';
+import { LoadingButton } from '@mui/lab';
 // components
+import userService from '../store/userService';
 import Label from '../components/label';
 import Iconify from '../components/iconify';
 import Scrollbar from '../components/scrollbar';
@@ -73,27 +81,27 @@ function applySortFilter(array, comparator, query) {
 }
 
 export default function UserPage() {
-  const [open, setOpen] = useState(null);
+  // const [open, setOpen] = useState(null);
 
   const [page, setPage] = useState(0);
 
-  const [order, setOrder] = useState('asc');
+  const [order, setOrder] = useState('desc');
 
   const [selected, setSelected] = useState([]);
 
-  const [orderBy, setOrderBy] = useState('name');
+  const [orderBy, setOrderBy] = useState('date');
 
   const [filterName, setFilterName] = useState('');
 
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
-  const handleOpenMenu = (event) => {
+  /* const handleOpenMenu = (event) => {
     setOpen(event.currentTarget);
   };
 
   const handleCloseMenu = () => {
     setOpen(null);
-  };
+  }; */
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -145,6 +153,55 @@ export default function UserPage() {
 
   const isNotFound = !filteredUsers.length && !!filterName;
 
+  // Dialog For Add Transaction
+  const [dialog, dialogOpen] = useState(false)
+
+  const handleDialogOpen = () => {
+    dialogOpen(true);
+  };
+
+  const handleDialogClose = () => {
+    dialogOpen(false);
+  };
+
+  // Handle Add Transaction
+
+  const [isLoading, setIsLoading] = useState(false)
+  const [addname, setName] = useState("")
+  const [addcategory, setCategory] = useState("")
+  const [adddescription, setDescription] = useState("")
+  const [adddate, setDate] = useState("")
+  const [addamount, setAmount] = useState(0)
+
+  const handleNameChange = (event) => {
+    setName(event.target.value)
+  }
+  const handleCategoryChange = (event) => {
+    setCategory(event.target.value)
+  }
+  const handleDescriptionChange = (event) => {
+    setDescription(event.target.value)
+  }
+  const handleDateChange = (event) => {
+    setDate(event.target.value)
+  }
+  const handleAmountChange = (event) => {
+    setAmount(event.target.value)
+  }
+  const handleAddTransaction = async () => {
+    setIsLoading(true)
+    try {
+      const token = sessionStorage.getItem('token').slice(1, -1)
+      await userService.addExpense(token, addname, addamount, addcategory, adddescription, adddate)
+      // const user = await userService.addExpense(token, name, amount, category, description, date);
+    } catch (err) {
+      console.error(err)
+    } finally {
+      setIsLoading(false)
+      handleDialogClose()
+    }
+  }
+
   return (
     <>
       <Helmet>
@@ -156,9 +213,70 @@ export default function UserPage() {
           <Typography variant="h4" gutterBottom>
             Transactions
           </Typography>
-          <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />}>
+          <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />} onClick={handleDialogOpen}>
             New Transaction
           </Button>
+          <Dialog open={dialog} onClose={handleDialogClose}>
+            <DialogTitle>Add Transaction</DialogTitle>
+            <DialogContent>
+              <DialogContentText>
+                Enter details of the transaction.
+              </DialogContentText>
+              <TextField
+                margin="dense"
+                id="addname"
+                label="Item Name"
+                type="text"
+                value={addname}
+                onChange={handleNameChange}
+                fullWidth
+                variant="standard"
+              />
+              <TextField
+                margin="dense"
+                id="addcategory"
+                label="Category"
+                type="text"
+                value={addcategory}
+                onChange={handleCategoryChange}
+                fullWidth
+                variant="standard"
+              />
+              <TextField
+                margin="dense"
+                id="adddescription"
+                label="Description"
+                type="text"
+                value={adddescription}
+                onChange={handleDescriptionChange}
+                fullWidth
+                variant="standard"
+              />
+              <TextField
+                margin="dense"
+                id="adddate"
+                type="date"
+                value={adddate}
+                onChange={handleDateChange}
+                fullWidth
+                variant="standard"
+              />
+              <TextField
+                margin="dense"
+                id="addamount"
+                label="Amount"
+                type="text"
+                value={addamount}
+                onChange={handleAmountChange}
+                fullWidth
+                variant="standard"
+              />
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleDialogClose}>Cancel</Button>
+              <LoadingButton onClick={handleAddTransaction} loading={isLoading}>Add</LoadingButton>
+            </DialogActions>
+          </Dialog>
         </Stack>
 
         <Card>
@@ -205,12 +323,13 @@ export default function UserPage() {
                         <TableCell align="left">
                           <Label color={'success'}>{amount}</Label>
                         </TableCell>
-
+                        {/*
                         <TableCell align="right">
                           <IconButton size="large" color="inherit" onClick={handleOpenMenu}>
                             <Iconify icon={'eva:more-vertical-fill'} />
                           </IconButton>
                         </TableCell>
+                        */}
                       </TableRow>
                     );
                   })}
@@ -259,7 +378,7 @@ export default function UserPage() {
           />
         </Card>
       </Container>
-
+      {/*
       <Popover
         open={Boolean(open)}
         anchorEl={open}
@@ -278,6 +397,7 @@ export default function UserPage() {
           },
         }}
       >
+        
         <MenuItem>
           <Iconify icon={'eva:edit-fill'} sx={{ mr: 2 }} />
           Edit
@@ -287,7 +407,9 @@ export default function UserPage() {
           <Iconify icon={'eva:trash-2-outline'} sx={{ mr: 2 }} />
           Delete
         </MenuItem>
+      
       </Popover>
+      */}
     </>
   );
 }

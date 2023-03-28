@@ -22,7 +22,7 @@ export default function Router() {
     }
   }
 
-  const token = localStorage.getItem('token') ? localStorage.getItem('token').slice(1, -1) : null;
+  const token = localStorage.getItem('token') ? localStorage.getItem('token').slice(1, -1) : (sessionStorage.getItem('token') ? sessionStorage.getItem('token').slice(1, -1) : null);
 
   useEffect(() => {
     if (token) getUser(token)
