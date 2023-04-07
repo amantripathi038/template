@@ -26,6 +26,9 @@ import {
   DialogContent,
   DialogContentText,
   TextField,
+  Select,
+  InputLabel,
+  MenuItem
 } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 // components
@@ -191,7 +194,8 @@ export default function UserPage() {
   const handleAddTransaction = async () => {
     setIsLoading(true)
     try {
-      const token = sessionStorage.getItem('token').slice(1, -1)
+      const token = localStorage.getItem('token') ? localStorage.getItem('token').slice(1, -1) : (sessionStorage.getItem('token') ? sessionStorage.getItem('token').slice(1, -1) : null);
+      // console.log(token, addname, addamount, addcategory, adddescription, adddate)
       await userService.addExpense(token, addname, addamount, addcategory, adddescription, adddate)
       // const user = await userService.addExpense(token, name, amount, category, description, date);
     } catch (err) {
@@ -232,16 +236,21 @@ export default function UserPage() {
                 fullWidth
                 variant="standard"
               />
-              <TextField
-                margin="dense"
-                id="addcategory"
-                label="Category"
-                type="text"
+              <InputLabel id="demo-simple-select-label">Category</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
                 value={addcategory}
+                label="Category"
                 onChange={handleCategoryChange}
                 fullWidth
-                variant="standard"
-              />
+              >
+                <MenuItem value={'Bills'}>Bills (Electricity / Water / Gas)</MenuItem>
+                <MenuItem value={'Food'}>Food</MenuItem>
+                <MenuItem value={'Medical'}>Medical</MenuItem>
+                <MenuItem value={'Travel'}>Travel</MenuItem>
+                <MenuItem value={'Others'}>Others</MenuItem>
+              </Select>
               <TextField
                 margin="dense"
                 id="adddescription"

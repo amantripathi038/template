@@ -10,6 +10,7 @@ import {
   AppWidgetSummary
 } from '../sections/@dashboard/app';
 
+import { mapGraph1, mapGraph2 } from '../_mock/user';
 // ----------------------------------------------------------------------
 
 export default function DashboardAppPage() {
