@@ -10,12 +10,11 @@ import {
   AppWidgetSummary
 } from '../sections/@dashboard/app';
 
-import { mapGraph1, mapGraph2 } from '../_mock/user';
+import {/* mapGraph1 , */ mapGraph2, expenseButtons } from '../_mock/user';
 // ----------------------------------------------------------------------
 
 export default function DashboardAppPage() {
   const theme = useTheme();
-
   return (
     <>
       <Helmet>
@@ -29,19 +28,19 @@ export default function DashboardAppPage() {
 
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Weekly Sales" total={714000} icon={'ant-design:android-filled'} />
+            <AppWidgetSummary title="Weekly Expenses" total={expenseButtons[0]} icon={'mdi:event-week-end-outline'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="New Users" total={1352831} color="info" icon={'ant-design:apple-filled'} />
+            <AppWidgetSummary title="Today's Expense" total={expenseButtons[1]} color="info" icon={'mdi:time-of-day'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Item Orders" total={1723315} color="warning" icon={'ant-design:windows-filled'} />
+            <AppWidgetSummary title="Monthly Expenses" total={expenseButtons[2]} color="warning" icon={'material-symbols:calendar-month'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Bug Reports" total={234} color="error" icon={'ant-design:bug-filled'} />
+            <AppWidgetSummary title="Last Month Expense" total={expenseButtons[3]} color="error" icon={'ic:outline-calendar-month'} />
           </Grid>
 
           <Grid item xs={12} md={6} lg={8}>
@@ -86,12 +85,13 @@ export default function DashboardAppPage() {
 
           <Grid item xs={12} md={6} lg={4}>
             <AppCurrentVisits
-              title="Current Visits"
+              title="Category"
               chartData={[
-                { label: 'America', value: 4344 },
-                { label: 'Asia', value: 5435 },
-                { label: 'Europe', value: 1443 },
-                { label: 'Africa', value: 4443 },
+                { label: 'Bills', value: mapGraph2.get('Bills') || 0 },
+                { label: 'Food', value: mapGraph2.get('Food') || 0 },
+                { label: 'Medical', value: mapGraph2.get('Medical') || 0 },
+                { label: 'Travel', value: mapGraph2.get('Travel') || 0 },
+                { label: 'Others', value: mapGraph2.get('Others') || 0 },
               ]}
               chartColors={[
                 theme.palette.primary.main,
