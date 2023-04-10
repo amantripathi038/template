@@ -2,6 +2,8 @@ const transactions = []
 const mapGraph1 = new Map()
 const mapGraph2 = new Map()
 const expenseButtons = [0, 0, 0, 0]
+const dates = []
+const spends = []
 
 const populateTransactions = (expenses) => {
   mapGraph1.clear()
@@ -45,6 +47,7 @@ const populateTransactions = (expenses) => {
   // Weekly Expense
   for (let i = 1; i <= 7; i += 1) {
     const exp = todayDate.toISOString().slice(0, 10)
+    dates.push(exp)
     expenseButtons[0] += (mapGraph1.get(exp) || 0)
     todayDate.setDate(todayDate.getDate() - 1)
   }
@@ -64,8 +67,12 @@ const populateTransactions = (expenses) => {
     todayDate.setDate(todayDate.getDate() - 1)
   }
   // console.log(expenseButtons)
-}
 
+  for (let i = 0; i < 7; i += 1) {
+    spends.push(mapGraph1.get(dates[i]) || 0)
+  }
+
+}
 // Export the functions and variables for use in other modules
-export { populateTransactions, mapGraph1, mapGraph2, expenseButtons }
+export { populateTransactions, dates, spends, mapGraph2, expenseButtons }
 export default transactions
