@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 // @mui
 import { styled, alpha } from '@mui/material/styles';
-import { Box, Link, Button, Drawer, Typography, Avatar, Stack } from '@mui/material';
+import { Box, Link, Button, Drawer, Typography, Avatar, Stack, Dialog, DialogContent, DialogActions, DialogContentText } from '@mui/material';
 // mock
 import account from '../../../_mock/account';
 // hooks
@@ -45,7 +45,15 @@ export default function Nav({ openNav, onCloseNav }) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
+  const [open, setOpen] = useState(false);
 
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
   const renderContent = (
     <Scrollbar
       sx={{
@@ -97,9 +105,34 @@ export default function Nav({ openNav, onCloseNav }) {
             </Typography>
           </Box>
 
-          <Button href="/" target="_blank" variant="contained">
+          <Button onClick={handleClickOpen} target="_blank" variant="contained">
             Upgrade to Pro
           </Button>
+          <Dialog
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+            sx={{
+              "& .MuiDialog-container": {
+                "& .MuiPaper-root": {
+                  width: "100%",
+                  maxWidth: "300px",  // Set your width here
+                },
+              },
+            }}
+          >
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description" style={{ padding: 'auto' }}>
+                <center> <b> Coming Soon! </b></center>
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose} autoFocus>
+                Close
+              </Button>
+            </DialogActions>
+          </Dialog>
         </Stack>
       </Box>
     </Scrollbar>
