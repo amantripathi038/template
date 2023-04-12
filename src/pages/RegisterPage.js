@@ -1,13 +1,12 @@
 import { Helmet } from 'react-helmet-async';
 // @mui
 import { styled } from '@mui/material/styles';
-import { Link, Container, Typography, Divider, Stack, Button } from '@mui/material';
+import { Link, Container, Typography } from '@mui/material';
 import { Link as LINK } from 'react-router-dom';
 // hooks
 import useResponsive from '../hooks/useResponsive';
 // components
 import Logo from '../components/logo';
-import Iconify from '../components/iconify';
 // sections
 import { RegisterForm } from '../sections/auth/register';
 
@@ -78,7 +77,7 @@ export default function LoginPage() {
                             Have an account? {''}
                             <LINK to='/login'> <Link variant="subtitle2"> Login </Link> </LINK>
                         </Typography>
-
+                        {/*
                         <Stack direction="row" spacing={2}>
                             <Button fullWidth size="large" color="inherit" variant="outlined">
                                 <Iconify icon="eva:google-fill" color="#DF3E30" width={22} height={22} />
@@ -98,7 +97,7 @@ export default function LoginPage() {
                                 OR
                             </Typography>
                         </Divider>
-
+*/ }
                         <RegisterForm />
                     </StyledContent>
                 </Container>
