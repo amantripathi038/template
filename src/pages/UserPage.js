@@ -7,7 +7,6 @@ import {
   Table,
   Stack,
   Paper,
-  Avatar,
   Button,
   // Popover,
   Checkbox,
@@ -114,7 +113,7 @@ export default function UserPage() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = TRANSACTION.map((n) => n.name);
+      const newSelecteds = TRANSACTION.map((n) => n._id);
       setSelected(newSelecteds);
       return;
     }
@@ -289,7 +288,7 @@ export default function UserPage() {
         </Stack>
 
         <Card>
-          <UserListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} />
+          <UserListToolbar numSelected={selected.length} selected={selected} filterName={filterName} onFilterName={handleFilterByName} />
 
           <Scrollbar>
             <TableContainer sx={{ minWidth: 800 }}>
@@ -305,18 +304,19 @@ export default function UserPage() {
                 />
                 <TableBody>
                   {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                    const { id, name, description, amount, category, avatarUrl, date } = row;
-                    const selectedUser = selected.indexOf(name) !== -1;
+
+                    const { name, description, amount, category, date } = row;
+                    const id = row._id
+                    const selectedUser = selected.indexOf(id) !== -1;
 
                     return (
                       <TableRow hover key={id} tabIndex={-1} role="checkbox" selected={selectedUser}>
                         <TableCell padding="checkbox">
-                          <Checkbox checked={selectedUser} onChange={(event) => handleClick(event, name)} />
+                          <Checkbox checked={selectedUser} onChange={(event) => handleClick(event, id)} />
                         </TableCell>
 
                         <TableCell component="th" scope="row" padding="none">
                           <Stack direction="row" alignItems="center" spacing={2}>
-                            <Avatar alt={name} src={avatarUrl} />
                             <Typography variant="subtitle2" noWrap>
                               {name}
                             </Typography>

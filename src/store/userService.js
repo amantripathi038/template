@@ -53,6 +53,16 @@ const userService = {
         const url = `${API_URI}removeExpense`
         const response = await axios.post(url, { id, token })
         const { user } = response.data
+        populateTransactions(user.expenses)
+        store.dispatch(removeExpenseSuccess(user))
+        return user
+    },
+    async removeMany(idArray, token) {
+        store.dispatch(removeExpenseStart())
+        const url = `${API_URI}removeMany`
+        const response = await axios.post(url, { idArray, token })
+        const { user } = response.data
+        populateTransactions(user.expenses)
         store.dispatch(removeExpenseSuccess(user))
         return user
     },

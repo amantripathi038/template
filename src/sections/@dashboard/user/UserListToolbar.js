@@ -3,8 +3,11 @@ import PropTypes from 'prop-types';
 import { styled, alpha } from '@mui/material/styles';
 import { Toolbar, Tooltip, IconButton, Typography, OutlinedInput, InputAdornment } from '@mui/material';
 // component
-import Iconify from '../../../components/iconify';
+import { useState } from 'react';
+import { LoadingButton } from '@mui/lab';
 
+import Iconify from '../../../components/iconify';
+import userService from "../../../store/userService"
 // ----------------------------------------------------------------------
 
 const StyledRoot = styled(Toolbar)(({ theme }) => ({
@@ -34,11 +37,25 @@ const StyledSearch = styled(OutlinedInput)(({ theme }) => ({
 
 UserListToolbar.propTypes = {
   numSelected: PropTypes.number,
+  selected: PropTypes.array,
   filterName: PropTypes.string,
   onFilterName: PropTypes.func,
 };
 
-export default function UserListToolbar({ numSelected, filterName, onFilterName }) {
+export default function UserListToolbar({ numSelected, selected, filterName, onFilterName }) {
+
+  const [isLoading, setIsLoading] = useState(false)
+
+  const handleDelete = () => {
+    const token = localStorage.getItem('token') ? localStorage.getItem('token').slice(1, -1) : (sessionStorage.getItem('token') ? sessionStorage.getItem('token').slice(1, -1) : null);
+    setIsLoading(true)
+    userService.removeMany(selected, token)
+    setTimeout(() => {
+      console.log("done")
+      setIsLoading(false)
+    }, 1000);
+  }
+
   return (
     <StyledRoot
       sx={{
@@ -67,9 +84,9 @@ export default function UserListToolbar({ numSelected, filterName, onFilterName 
 
       {numSelected > 0 ? (
         <Tooltip title="Delete">
-          <IconButton>
+          <LoadingButton onClick={handleDelete} loading={isLoading}>
             <Iconify icon="eva:trash-2-fill" />
-          </IconButton>
+          </LoadingButton>
         </Tooltip>
       ) : (
         <Tooltip title="Filter list">
