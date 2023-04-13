@@ -16,7 +16,7 @@ import { dates, spends, mapGraph2, expenseButtons } from '../_mock/user';
 export default function DashboardAppPage() {
   const theme = useTheme();
 
-  const increasePercentage = (expenseButtons[2] - expenseButtons[3]) * 100 / expenseButtons[3];
+  const increasePercentage = ((expenseButtons[2] - expenseButtons[3]) * 100 / expenseButtons[3]).toFixed(1);
   const sign = increasePercentage >= 0 ? "+" : "";
   const increaseString = `${sign}${increasePercentage}% than last month`
   return (
