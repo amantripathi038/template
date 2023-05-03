@@ -1,5 +1,12 @@
 import axios from 'axios';
-import { addExpenseStart, addExpenseSuccess, loginStart, loginSuccess, registerStart, registerSuccess, removeExpenseStart, removeExpenseSuccess, logout as Logout } from './userSlice';
+import {
+    addExpenseStart, addExpenseSuccess, loginStart, loginSuccess, registerStart,
+    registerSuccess, removeExpenseStart, removeExpenseSuccess, logout as Logout,
+    changePasswordStart, changePasswordFail, changePasswordSuccess,
+    updateProfileStart,
+    updateProfileFail,
+    updateProfileSuccess
+} from './userSlice';
 import store from './store';
 import { populateAccount } from '../_mock/account'
 import { populateTransactions } from '../_mock/user';
@@ -14,7 +21,6 @@ const userService = {
         const { user } = response.data;
         const { token } = response.data;
         store.dispatch(loginSuccess(user)); // dispatch login success action with user object
-        console.log(user.expenses)
         populateAccount(user)
         populateTransactions(user.expenses)
         return token;
@@ -69,6 +75,33 @@ const userService = {
     async logout() {
         console.log("done")
         store.dispatch(Logout())
+    },
+    async changePassword(oldPassword, newPassword, token) {
+        store.dispatch(changePasswordStart())
+        const url = `${API_URI}changePassword`
+        try {
+            const response = await axios.post(url, { oldPassword, newPassword, token })
+            alert(response.data.message || "Something went wrong")
+            store.dispatch(changePasswordSuccess())
+        }
+        catch (error) {
+            alert(error.response.data.message || "Something went wrong")
+            store.dispatch(changePasswordFail())
+        }
+    },
+    async updateProfile(name, email, contact, token) {
+        store.dispatch(updateProfileStart())
+        const url = `${API_URI}updateProfile`
+        try {
+            const response = await axios.post(url, { name, email, contact, token })
+            alert(response.data.message || "Something went wrong")
+            populateAccount(response.data.user)
+            store.dispatch(updateProfileSuccess(response.data.user))
+        }
+        catch (error) {
+            alert(error.response.data.message || "Something went wrong")
+            store.dispatch(updateProfileFail())
+        }
     }
 };
 
