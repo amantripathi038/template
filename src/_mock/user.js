@@ -1,3 +1,5 @@
+import account from "./account"
+
 const transactions = []
 const mapGraph1 = new Map()
 const mapGraph2 = new Map()
@@ -61,13 +63,13 @@ const populateTransactions = (expenses) => {
   expenseButtons[2] += expenseButtons[0]
 
   // Previous Month
-  for (let i = 1; i <= 30; i += 1) {
-    const exp = todayDate.toISOString().slice(0, 10)
-    expenseButtons[3] += (mapGraph1.get(exp) || 0)
-    todayDate.setDate(todayDate.getDate() - 1)
-  }
+  // for (let i = 1; i <= 30; i += 1) {
+  //   const exp = todayDate.toISOString().slice(0, 10)
+  //   expenseButtons[3] += (mapGraph1.get(exp) || 0)
+  //   todayDate.setDate(todayDate.getDate() - 1)
+  // }
   // console.log(expenseButtons)
-
+  expenseButtons[3] = account.salary
   for (let i = 0; i < 7; i += 1) {
     spends.push(mapGraph1.get(dates[i]) || 0)
   }

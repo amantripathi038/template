@@ -44,7 +44,7 @@ export default function DashboardAppPage() {
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Last Month Expense" total={expenseButtons[3]} color="error" icon={'ic:outline-calendar-month'} />
+            <AppWidgetSummary title="Remaining Amount" total={expenseButtons[3]} color="error" icon={'teenyicons:rupee-outline'} />
           </Grid>
 
           <Grid item xs={12} md={6} lg={8}>
