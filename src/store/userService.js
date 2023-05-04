@@ -50,9 +50,8 @@ const userService = {
         const url = `${API_URI}addExpense`
         const response = await axios.post(url, { token, name, amount, category, description, date })
         const { user } = response.data
-        store.dispatch(addExpenseSuccess(user))
         populateTransactions(user.expenses)
-        return user
+        store.dispatch(addExpenseSuccess(user))
     },
     async removeExpense(id, token) {
         store.dispatch(removeExpenseStart())
