@@ -1,13 +1,11 @@
 import { Helmet } from 'react-helmet-async';
 
-import { useTheme } from '@mui/material/styles';
-import { Grid, Container, Typography } from '@mui/material';
+// import { useTheme } from '@mui/material/styles';
+import { Container, Typography } from '@mui/material';
 // components
 // ----------------------------------------------------------------------
 
 export default function Investment() {
-    const theme = useTheme();
-
     return (
         <>
             <Helmet>
