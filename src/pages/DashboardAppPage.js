@@ -1,5 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 
+import { FloatButton } from "antd";
+import { PlusCircleTwoTone, MinusCircleTwoTone, DollarCircleTwoTone } from '@ant-design/icons';
 import { useTheme } from '@mui/material/styles';
 import { Grid, Container, Typography } from '@mui/material';
 // components
@@ -83,6 +85,26 @@ export default function DashboardAppPage() {
           </Grid>
         </Grid>
       </Container>
+      <FloatButton.Group
+        icon={<DollarCircleTwoTone />}
+        shape="circle"
+        trigger='click'
+
+
+      >
+        <FloatButton
+          icon={<PlusCircleTwoTone />}
+          shape="square"
+          tooltip="Add Credit"
+
+
+        />
+        <FloatButton
+          icon={<MinusCircleTwoTone />}
+          shape="square"
+          tooltip="Add Expense"
+        />
+      </FloatButton.Group>
     </>
   );
 }

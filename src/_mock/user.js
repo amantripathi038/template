@@ -75,6 +75,8 @@ const populateTransactions = (expenses) => {
   }
 
 }
+
+
 // Export the functions and variables for use in other modules
 export { populateTransactions, dates, spends, mapGraph2, expenseButtons }
 export default transactions

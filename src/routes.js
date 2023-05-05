@@ -10,7 +10,8 @@ import Page404 from './pages/Page404';
 import DashboardAppPage from './pages/DashboardAppPage';
 import RegisterPage from './pages/RegisterPage';
 import userService from './store/userService';
-
+import DeepAnalysis from './pages/DeepAnalysis'
+import Investment from './pages/Investment'
 
 export default function Router() {
 
@@ -42,6 +43,8 @@ export default function Router() {
       >
         <Route path="app" element={<DashboardAppPage />} />
         <Route path="user" element={<UserPage />} />
+        <Route path="analysis" element={<DeepAnalysis />} />
+        <Route path="investment" element={<Investment />} />
       </Route>
 
       <Route path="/404" element={<Page404 />} />
