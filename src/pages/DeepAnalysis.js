@@ -9,6 +9,7 @@ import {
 } from '../sections/@dashboard/app';
 
 import { monthGraphArray, mapGraph2, thisMonthArray, previousMonthArray, prePreviousMonthArray, dateLabels } from '../_mock/user';
+import FloatingButton from './FloatingButton';
 // ----------------------------------------------------------------------
 
 export default function DashboardAppPage() {
@@ -75,6 +76,7 @@ export default function DashboardAppPage() {
                     />
                 </Grid>
             </Container>
+            <FloatingButton />
         </>
     );
 }

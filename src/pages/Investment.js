@@ -2,6 +2,7 @@ import { Helmet } from 'react-helmet-async';
 
 // import { useTheme } from '@mui/material/styles';
 import { Container, Typography } from '@mui/material';
+import FloatingButton from './FloatingButton';
 // components
 // ----------------------------------------------------------------------
 
@@ -16,6 +17,7 @@ export default function Investment() {
                     Hi, Welcome back
                 </Typography>
             </Container>
+            <FloatingButton />
         </>
     );
 }

@@ -39,6 +39,7 @@ import Scrollbar from '../components/scrollbar';
 import { UserListHead, UserListToolbar } from '../sections/@dashboard/user';
 // mock
 import TRANSACTION from '../_mock/user';
+import FloatingButton from './FloatingButton';
 
 // ----------------------------------------------------------------------
 
@@ -419,6 +420,7 @@ export default function UserPage() {
       
       </Popover>
       */}
+      <FloatingButton />
     </>
   );
 }
