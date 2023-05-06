@@ -73,10 +73,76 @@ const populateTransactions = (expenses) => {
   for (let i = 0; i < 7; i += 1) {
     spends.push(mapGraph1.get(dates[i]) || 0)
   }
-
+  deepAnalysis(expenses)
 }
 
+function getMonthName(monthNumber) {
+  const date = new Date();
+  date.setMonth(monthNumber - 1);
+
+  return date.toLocaleString('en-US', { month: 'long' });
+}
+
+const monthGraph = new Map()
+const monthGraphArray = []
+const deepAnalysis = (expenses) => {
+  monthwiseGraph(expenses)
+  comparisonGraph(expenses)
+}
+
+const monthwiseGraph = (expenses) => {
+  monthGraph.clear()
+  monthGraphArray.length = 0
+  for (let i = 1; i <= 12; i += 1) {
+    monthGraph.set(getMonthName(i), 0)
+  }
+  for (let i = 0; i < expenses.length; i += 1) {
+    const date = getMonthName(expenses[i].date.slice(5, 7))
+    monthGraph.set(date, monthGraph.get(date) + expenses[i].amount)
+  }
+  monthGraph.forEach((value, key) => {
+    monthGraphArray.push({
+      label: key,
+      value
+    })
+  })
+}
+
+const thisMonthArray = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+const previousMonthArray = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+const prePreviousMonthArray = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+const dateLabels = []
+
+const comparisonGraph = (expenses) => {
+  dateLabels.length = 0
+  thisMonthArray.fill(0)
+  previousMonthArray.fill(0)
+  prePreviousMonthArray.fill(0)
+  const date = new Date()
+  const currentMonth = (date.getMonth() + 1).toString().padStart(2, '0');
+  const previousMonth = ((currentMonth - 1) <= 0 ? 12 : currentMonth - 1).toString().padStart(2, '0');
+  const prePreviousMonth = ((currentMonth - 2) <= 0 ? 12 + (currentMonth - 2) : currentMonth - 2).toString().padStart(2, '0');
+  for (let i = 4; i < 32; i += 3) {
+    const d = `${currentMonth}/${i.toString().padStart(2, '0')}/${date.getFullYear()}`
+    dateLabels.push(d)
+  }
+  for (let i = 0; i < expenses.length; i += 1) {
+    const d = parseInt(expenses[i].date.slice(8, 10), 10)
+    let idx = Math.floor((d - 1) / 3)
+    if (idx > 9) idx = 9
+    console.log(idx)
+    if (expenses[i].date.slice(5, 7) === currentMonth) {
+      thisMonthArray[idx] += expenses[i].amount
+    }
+    else if (expenses[i].date.slice(5, 7) === previousMonth) {
+      previousMonthArray[idx] += expenses[i].amount
+    }
+    else if (expenses[i].date.slice(5, 7) === prePreviousMonth) {
+      prePreviousMonthArray[idx] += expenses[i].amount
+    }
+  }
+}
 
 // Export the functions and variables for use in other modules
-export { populateTransactions, dates, spends, mapGraph2, expenseButtons }
+export { populateTransactions, dates, spends, mapGraph2, expenseButtons, monthGraphArray, dateLabels, thisMonthArray, previousMonthArray, prePreviousMonthArray }
 export default transactions
