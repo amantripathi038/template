@@ -231,6 +231,7 @@ export default function AccountPopover() {
             onChange={handleEmailChange}
             fullWidth
             variant="standard"
+            disabled
           />
           <TextField
             margin="dense"

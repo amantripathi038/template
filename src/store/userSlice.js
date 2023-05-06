@@ -85,6 +85,17 @@ export const userSlice = createSlice({
         },
         updateProfileFail: (state) => {
             state.isLoading = false
+        },
+        addCreditStart: (state) => {
+            state.isLoading = true
+        },
+        addCreditSuccess: (state, action) => {
+            state.isLoading = false
+            state.user = action.payload
+        },
+        addCreditFail: (state, error) => {
+            state.isLoading = false
+            state.error = error
         }
     }
 });
@@ -92,6 +103,6 @@ export const userSlice = createSlice({
 export const { loginStart, loginSuccess, loginFail, registerStart, registerSuccess, registerFail, logout,
     addExpenseStart, addExpenseFail, addExpenseSuccess, removeExpenseStart, removeExpenseFail, removeExpenseSuccess,
     changePasswordStart, changePasswordSuccess, changePasswordFail,
-    updateProfileStart, updateProfileSuccess, updateProfileFail } = userSlice.actions;
+    updateProfileStart, updateProfileSuccess, updateProfileFail, addCreditStart, addCreditSuccess, addCreditFail } = userSlice.actions;
 
 export default userSlice.reducer

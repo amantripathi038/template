@@ -5,7 +5,10 @@ import {
     changePasswordStart, changePasswordFail, changePasswordSuccess,
     updateProfileStart,
     updateProfileFail,
-    updateProfileSuccess
+    updateProfileSuccess,
+    addCreditStart,
+    addCreditSuccess,
+    addCreditFail
 } from './userSlice';
 import store from './store';
 import { populateAccount } from '../_mock/account'
@@ -100,6 +103,20 @@ const userService = {
         catch (error) {
             alert(error.response.data.message || "Something went wrong")
             store.dispatch(updateProfileFail())
+        }
+    },
+    async addCredit(token, salary) {
+        store.dispatch(addCreditStart())
+        const url = `${API_URI}creditSalary`
+        try {
+            const response = await axios.post(url, { token, salary })
+            populateAccount(response.data.user)
+            alert(response.data.message || "Something went wrong")
+            store.dispatch(addCreditSuccess(response.data.user))
+        }
+        catch (error) {
+            alert(error.response.data.message)
+            store.dispatch(addCreditFail(error.response))
         }
     }
 };

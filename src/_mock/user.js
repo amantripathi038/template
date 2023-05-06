@@ -130,7 +130,6 @@ const comparisonGraph = (expenses) => {
     const d = parseInt(expenses[i].date.slice(8, 10), 10)
     let idx = Math.floor((d - 1) / 3)
     if (idx > 9) idx = 9
-    console.log(idx)
     if (expenses[i].date.slice(5, 7) === currentMonth) {
       thisMonthArray[idx] += expenses[i].amount
     }

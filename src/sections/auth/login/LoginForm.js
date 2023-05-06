@@ -38,7 +38,7 @@ export default function LoginForm() {
         navigate('/dashboard/app', { replace: true });
       }
     } catch (error) {
-      console.error(error);
+      alert(error.response.data.message)
     } finally {
       setIsLoading(false);
     }

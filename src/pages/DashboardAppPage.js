@@ -1,7 +1,4 @@
 import { Helmet } from 'react-helmet-async';
-
-import { FloatButton } from "antd";
-import { PlusCircleTwoTone, MinusCircleTwoTone, DollarCircleTwoTone } from '@ant-design/icons';
 import { useTheme } from '@mui/material/styles';
 import { Grid, Container, Typography } from '@mui/material';
 // components
@@ -13,6 +10,8 @@ import {
 } from '../sections/@dashboard/app';
 
 import { dates, spends, mapGraph2, expenseButtons } from '../_mock/user';
+import FloatingButton from './FloatingButton';
+import store from '../store/store';
 // ----------------------------------------------------------------------
 
 export default function DashboardAppPage() {
@@ -45,7 +44,7 @@ export default function DashboardAppPage() {
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Remaining Amount" total={expenseButtons[3]} color="error" icon={'teenyicons:rupee-outline'} />
+            <AppWidgetSummary title="Remaining Amount" total={store.getState().user.user.salary || 0} color="error" icon={'teenyicons:rupee-outline'} />
           </Grid>
 
           <Grid item xs={12} md={6} lg={8}>
@@ -84,26 +83,7 @@ export default function DashboardAppPage() {
           </Grid>
         </Grid>
       </Container>
-      <FloatButton.Group
-        icon={<DollarCircleTwoTone />}
-        shape="circle"
-        trigger='click'
-
-
-      >
-        <FloatButton
-          icon={<PlusCircleTwoTone />}
-          shape="square"
-          tooltip="Add Credit"
-
-
-        />
-        <FloatButton
-          icon={<MinusCircleTwoTone />}
-          shape="square"
-          tooltip="Add Expense"
-        />
-      </FloatButton.Group>
+      <FloatingButton />
     </>
   );
 }
