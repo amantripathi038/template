@@ -13,6 +13,7 @@ AppConversionRates.propTypes = {
   title: PropTypes.string,
   subheader: PropTypes.string,
   chartData: PropTypes.array.isRequired,
+  height: PropTypes.number.isRequired,
 };
 
 export default function AppConversionRates({ title, subheader, chartData, height, ...other }) {
