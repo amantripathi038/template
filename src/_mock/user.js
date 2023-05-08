@@ -3,6 +3,7 @@ import account from "./account"
 const transactions = []
 const mapGraph1 = new Map()
 const mapGraph2 = new Map()
+const mapGraph3 = new Map()
 const expenseButtons = [0, 0, 0, 0]
 const dates = []
 const spends = []
@@ -10,6 +11,7 @@ const spends = []
 const populateTransactions = (expenses) => {
   mapGraph1.clear()
   mapGraph2.clear()
+  mapGraph3.clear()
   transactions.length = 0
   transactions.push(...expenses)
 
@@ -18,7 +20,10 @@ const populateTransactions = (expenses) => {
   expenses.forEach(({ date, amount, category }) => {
     // total += amount
     mapGraph1.set(date, (mapGraph1.get(date) || 0) + amount)
-    mapGraph2.set(category, (mapGraph2.get(category) || 0) + amount)
+    const month = parseInt(date.slice(5, 7), 10);
+    const currMonth = (new Date()).getMonth() + 1;
+    if (month === currMonth) mapGraph2.set(category, (mapGraph2.get(category) || 0) + amount)
+    mapGraph3.set(category, (mapGraph2.get(category) || 0) + amount)
   })
 
   /* Percentage is Not Needed
@@ -143,5 +148,5 @@ const comparisonGraph = (expenses) => {
 }
 
 // Export the functions and variables for use in other modules
-export { populateTransactions, dates, spends, mapGraph2, expenseButtons, monthGraphArray, dateLabels, thisMonthArray, previousMonthArray, prePreviousMonthArray }
+export { populateTransactions, dates, spends, mapGraph2, expenseButtons, monthGraphArray, dateLabels, thisMonthArray, previousMonthArray, prePreviousMonthArray, mapGraph3 }
 export default transactions

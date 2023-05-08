@@ -18,20 +18,9 @@ import {
   Typography,
   // IconButton,
   TableContainer,
-  TablePagination,
-  Dialog,
-  DialogActions,
-  DialogTitle,
-  DialogContent,
-  DialogContentText,
-  TextField,
-  Select,
-  InputLabel,
-  MenuItem
+  TablePagination
 } from '@mui/material';
-import { LoadingButton } from '@mui/lab';
 // components
-import userService from '../store/userService';
 import Label from '../components/label';
 import Iconify from '../components/iconify';
 import Scrollbar from '../components/scrollbar';
@@ -40,7 +29,7 @@ import { UserListHead, UserListToolbar } from '../sections/@dashboard/user';
 // mock
 import TRANSACTION from '../_mock/user';
 import FloatingButton from './FloatingButton';
-
+import AddExpenseModal from './addExpenseModal';
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
@@ -160,51 +149,8 @@ export default function UserPage() {
   const [dialog, dialogOpen] = useState(false)
 
   const handleDialogOpen = () => {
-    dialogOpen(true);
+    dialogOpen(!dialog);
   };
-
-  const handleDialogClose = () => {
-    dialogOpen(false);
-  };
-
-  // Handle Add Transaction
-
-  const [isLoading, setIsLoading] = useState(false)
-  const [addname, setName] = useState("")
-  const [addcategory, setCategory] = useState("")
-  const [adddescription, setDescription] = useState("")
-  const [adddate, setDate] = useState("")
-  const [addamount, setAmount] = useState(0)
-
-  const handleNameChange = (event) => {
-    setName(event.target.value)
-  }
-  const handleCategoryChange = (event) => {
-    setCategory(event.target.value)
-  }
-  const handleDescriptionChange = (event) => {
-    setDescription(event.target.value)
-  }
-  const handleDateChange = (event) => {
-    setDate(event.target.value)
-  }
-  const handleAmountChange = (event) => {
-    setAmount(event.target.value)
-  }
-  const handleAddTransaction = async () => {
-    setIsLoading(true)
-    try {
-      const token = localStorage.getItem('token') ? localStorage.getItem('token').slice(1, -1) : (sessionStorage.getItem('token') ? sessionStorage.getItem('token').slice(1, -1) : null);
-      // console.log(token, addname, addamount, addcategory, adddescription, adddate)
-      await userService.addExpense(token, addname, addamount, addcategory, adddescription, adddate)
-      // const user = await userService.addExpense(token, name, amount, category, description, date);
-    } catch (err) {
-      console.error(err)
-    } finally {
-      setIsLoading(false)
-      handleDialogClose()
-    }
-  }
 
   return (
     <>
@@ -220,72 +166,7 @@ export default function UserPage() {
           <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />} onClick={handleDialogOpen}>
             New Transaction
           </Button>
-          <Dialog open={dialog} onClose={handleDialogClose}>
-            <DialogTitle>Add Transaction</DialogTitle>
-            <DialogContent>
-              <DialogContentText>
-                Enter details of the transaction.
-              </DialogContentText>
-              <TextField
-                margin="dense"
-                id="addname"
-                label="Item Name"
-                type="text"
-                value={addname}
-                onChange={handleNameChange}
-                fullWidth
-                variant="standard"
-              />
-              <InputLabel id="demo-simple-select-label">Category</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={addcategory}
-                label="Category"
-                onChange={handleCategoryChange}
-                fullWidth
-              >
-                <MenuItem value={'Bills'}>Bills (Electricity / Water / Gas)</MenuItem>
-                <MenuItem value={'Food'}>Food</MenuItem>
-                <MenuItem value={'Medical'}>Medical</MenuItem>
-                <MenuItem value={'Travel'}>Travel</MenuItem>
-                <MenuItem value={'Others'}>Others</MenuItem>
-              </Select>
-              <TextField
-                margin="dense"
-                id="adddescription"
-                label="Description"
-                type="text"
-                value={adddescription}
-                onChange={handleDescriptionChange}
-                fullWidth
-                variant="standard"
-              />
-              <TextField
-                margin="dense"
-                id="adddate"
-                type="date"
-                value={adddate}
-                onChange={handleDateChange}
-                fullWidth
-                variant="standard"
-              />
-              <TextField
-                margin="dense"
-                id="addamount"
-                label="Amount"
-                type="text"
-                value={addamount}
-                onChange={handleAmountChange}
-                fullWidth
-                variant="standard"
-              />
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={handleDialogClose}>Cancel</Button>
-              <LoadingButton onClick={handleAddTransaction} loading={isLoading}>Add</LoadingButton>
-            </DialogActions>
-          </Dialog>
+          <AddExpenseModal dialog={dialog} dialogOpen={dialogOpen} />
         </Stack>
 
         <Card>

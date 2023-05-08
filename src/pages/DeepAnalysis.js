@@ -8,7 +8,7 @@ import {
     AppWebsiteVisits
 } from '../sections/@dashboard/app';
 
-import { monthGraphArray, mapGraph2, thisMonthArray, previousMonthArray, prePreviousMonthArray, dateLabels } from '../_mock/user';
+import { monthGraphArray, mapGraph3, thisMonthArray, previousMonthArray, prePreviousMonthArray, dateLabels } from '../_mock/user';
 import FloatingButton from './FloatingButton';
 // ----------------------------------------------------------------------
 
@@ -34,21 +34,6 @@ export default function DashboardAppPage() {
                 </Grid>
                 <br />
                 <Grid item xs={12} md={6} lg={8}>
-                    <AppConversionRates
-                        title="Categorywise Expenses"
-                        subheader=""
-                        chartData={[
-                            { label: 'Bills', value: mapGraph2.get('Bills') || 0 },
-                            { label: 'Food', value: mapGraph2.get('Food') || 0 },
-                            { label: 'Medical', value: mapGraph2.get('Medical') || 0 },
-                            { label: 'Travel', value: mapGraph2.get('Travel') || 0 },
-                            { label: 'Others', value: mapGraph2.get('Others') || 0 },
-                        ]}
-                        height={230}
-                    />
-                </Grid>
-                <br />
-                <Grid item xs={12} md={6} lg={8}>
                     <AppWebsiteVisits
                         title="Compare Expenses"
                         subheader=""
@@ -56,7 +41,7 @@ export default function DashboardAppPage() {
                         chartData={[
                             {
                                 name: 'This Month',
-                                type: 'column',
+                                type: 'bar',
                                 fill: 'solid',
                                 data: thisMonthArray,
                             },
@@ -73,6 +58,21 @@ export default function DashboardAppPage() {
                                 data: prePreviousMonthArray,
                             },
                         ]}
+                    />
+                </Grid>
+                <br />
+                <Grid item xs={12} md={6} lg={8}>
+                    <AppConversionRates
+                        title="Categorywise Expenses (All Time)"
+                        subheader=""
+                        chartData={[
+                            { label: 'Bills', value: mapGraph3.get('Bills') || 0 },
+                            { label: 'Food', value: mapGraph3.get('Food') || 0 },
+                            { label: 'Medical', value: mapGraph3.get('Medical') || 0 },
+                            { label: 'Travel', value: mapGraph3.get('Travel') || 0 },
+                            { label: 'Others', value: mapGraph3.get('Others') || 0 },
+                        ]}
+                        height={230}
                     />
                 </Grid>
             </Container>

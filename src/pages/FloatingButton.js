@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Dialog, DialogActions, DialogTitle, DialogContent, TextField, Button } from "@mui/material";
 import { LoadingButton } from '@mui/lab';
 import userService from "../store/userService";
+import AddExpenseModal from './addExpenseModal';
 
 export default function FloatingButton() {
     const [creditToggle, setCreditToggle] = useState(false)
@@ -25,6 +26,12 @@ export default function FloatingButton() {
         creditToggler()
     }
 
+    const [dialog, dialogOpen] = useState(false)
+
+    const handleDialogOpen = () => {
+        dialogOpen(!dialog);
+    };
+
 
     return (
         <>
@@ -43,6 +50,7 @@ export default function FloatingButton() {
                     icon={<MinusCircleTwoTone />}
                     shape="square"
                     tooltip="Add Expense"
+                    onClick={handleDialogOpen}
                 />
             </FloatButton.Group>
             <Dialog open={creditToggle} onClose={creditToggler}>
@@ -64,6 +72,7 @@ export default function FloatingButton() {
                     <LoadingButton onClick={handleAddCredit} loading={isLoading}>Add</LoadingButton>
                 </DialogActions>
             </Dialog>
+            <AddExpenseModal dialog={dialog} dialogOpen={dialogOpen} />
         </>
     )
 } 
