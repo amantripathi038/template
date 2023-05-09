@@ -4,29 +4,12 @@ import { useState } from 'react';
 import { Grid, Button, Container, Stack, Typography } from '@mui/material';
 // components
 import Iconify from '../components/iconify';
-import { BlogPostCard, BlogPostsSort, BlogPostsSearch } from '../sections/@dashboard/blog';
+import { BlogPostCard } from '../sections/@dashboard/blog';
 // mock
 import POSTS from '../_mock/blog';
 
 import AddAccountModal from './addAccountModal';
-// ----------------------------------------------------------------------
 
-const SORT_OPTIONS = [
-  { value: 'latest', label: 'Latest' },
-  { value: 'popular', label: 'Popular' },
-  { value: 'oldest', label: 'Oldest' },
-];
-
-const TABLE_HEAD = [
-  { id: 'name', label: 'Name', alignRight: false },
-  { id: 'category', label: 'Category', alignRight: false },
-  { id: 'description', label: 'Description', alignRight: false },
-  { id: 'date', label: 'Date', alignRight: false },
-  { id: 'amount', label: 'Amount', alignRight: false },
-  { id: '' },
-];
-
-// ----------------------------------------------------------------------
 
 export default function BlogPage() {
   const [dialog, dialogOpen] = useState(false)
@@ -45,7 +28,7 @@ export default function BlogPage() {
           <Typography variant="h4" gutterBottom>
             Accounts
           </Typography>
-          <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill"  />} onClick={handleDialogOpen}>
+          <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />} onClick={handleDialogOpen}>
             New Account
           </Button>
           <AddAccountModal dialog={dialog} dialogOpen={dialogOpen} />

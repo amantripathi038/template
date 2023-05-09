@@ -18,7 +18,8 @@ import {
   Typography,
   // IconButton,
   TableContainer,
-  TablePagination
+  TablePagination,
+  MenuItem
 } from '@mui/material';
 // components
 import Label from '../components/label';
@@ -30,6 +31,7 @@ import { UserListHead, UserListToolbar } from '../sections/@dashboard/user';
 import TRANSACTION from '../_mock/user';
 import FloatingButton from './FloatingButton';
 import AddExpenseModal from './addExpenseModal';
+import EditExpenseModal from './EditExpenseModal';
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
@@ -151,7 +153,12 @@ export default function UserPage() {
   const handleDialogOpen = () => {
     dialogOpen(!dialog);
   };
-
+  const [edit, editOpen] = useState(false);
+  const [editRow, setEditRow] = useState(null);
+  const handleEdit = (row) => {
+    editOpen(!edit);
+    setEditRow(row)
+  }
   return (
     <>
       <Helmet>
@@ -192,36 +199,37 @@ export default function UserPage() {
                     const selectedUser = selected.indexOf(id) !== -1;
 
                     return (
-                      <TableRow hover key={id} tabIndex={-1} role="checkbox" selected={selectedUser}>
-                        <TableCell padding="checkbox">
-                          <Checkbox checked={selectedUser} onChange={(event) => handleClick(event, id)} />
-                        </TableCell>
+                      <>
+                        <TableRow hover key={id} tabIndex={-1} role="checkbox" selected={selectedUser}>
+                          <TableCell padding="checkbox">
+                            <Checkbox checked={selectedUser} onChange={(event) => handleClick(event, id)} />
+                          </TableCell>
 
-                        <TableCell component="th" scope="row" padding="none">
-                          <Stack direction="row" alignItems="center" spacing={2}>
-                            <Typography variant="subtitle2" noWrap>
-                              {name}
-                            </Typography>
-                          </Stack>
-                        </TableCell>
+                          <TableCell component="th" scope="row" padding="none">
+                            <Stack direction="row" alignItems="center" spacing={2}>
+                              <Typography variant="subtitle2" noWrap>
+                                {name}
+                              </Typography>
+                            </Stack>
+                          </TableCell>
 
-                        <TableCell align="left">{category}</TableCell>
+                          <TableCell align="left">{category}</TableCell>
 
-                        <TableCell align="left">{description}</TableCell>
+                          <TableCell align="left">{description}</TableCell>
 
-                        <TableCell align="left">{date}</TableCell>
+                          <TableCell align="left">{date}</TableCell>
 
-                        <TableCell align="left">
-                          <Label color={'success'}>{amount}</Label>
-                        </TableCell>
-                        {/*
-                        <TableCell align="right">
-                          <IconButton size="large" color="inherit" onClick={handleOpenMenu}>
-                            <Iconify icon={'eva:more-vertical-fill'} />
-                          </IconButton>
-                        </TableCell>
-                        */}
-                      </TableRow>
+                          <TableCell align="left">
+                            <Label color={'success'}>{amount}</Label>
+                          </TableCell>
+                          <MenuItem onClick={() => handleEdit(row)}>
+                            <Iconify icon={'eva:edit-fill'} sx={{ mr: 2 }} color="blue" />
+                            Edit
+                          </MenuItem>
+                          {edit && <EditExpenseModal dialog={edit} dialogOpen={editOpen} row={editRow} />}
+
+                        </TableRow>
+                      </>
                     );
                   })}
                   {emptyRows > 0 && (

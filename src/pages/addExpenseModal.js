@@ -18,8 +18,8 @@ import { LoadingButton } from '@mui/lab';
 import userService from '../store/userService';
 
 AddExpenseModal.propTypes = {
-    dialog: PropTypes.string.isRequired,
-    dialogOpen: PropTypes.bool.isRequired,
+    dialog: PropTypes.bool.isRequired,
+    dialogOpen: PropTypes.func.isRequired,
 };
 
 

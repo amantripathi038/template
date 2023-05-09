@@ -42,28 +42,30 @@ export default function Router() {
   return (
     <>
       {isLoading && (
-        <div style={{ position: 'fixed', top: '15%', left: '50%' }}>
+        <div style={{ position: 'fixed', top: '40%', left: '50%' }}>
           <CircularProgress color="success" />
         </div>
       )}
-      <Routes>
-        <Route path="/" element={<Navigate to="/dashboard/app" />} />
-        <Route path="/login" element={!user ? <LoginPage /> : <Navigate to="/dashboard/app" />} />
-        <Route path="/register" element={!user ? <RegisterPage /> : <Navigate to="/dashboard/app" />} />
+      {!isLoading &&
+        <Routes>
+          <Route path="/" element={<Navigate to="/dashboard/app" />} />
+          <Route path="/login" element={!user ? <LoginPage /> : <Navigate to="/dashboard/app" />} />
+          <Route path="/register" element={!user ? <RegisterPage /> : <Navigate to="/dashboard/app" />} />
 
-        <Route
-          path="/dashboard"
-          element={user ? <DashboardLayout /> : <Navigate to="/login" />}
-        >
-          <Route path="app" element={<DashboardAppPage />} />
-          <Route path="user" element={<UserPage />} />
-          <Route path="analysis" element={<DeepAnalysis />} />
-          <Route path="investment" element={<Investment />} />
-        </Route>
+          <Route
+            path="/dashboard"
+            element={user ? <DashboardLayout /> : <Navigate to="/login" />}
+          >
+            <Route path="app" element={<DashboardAppPage />} />
+            <Route path="user" element={<UserPage />} />
+            <Route path="analysis" element={<DeepAnalysis />} />
+            <Route path="investment" element={<Investment />} />
+          </Route>
 
-        <Route path="/404" element={<Page404 />} />
-        <Route path="*" element={<Navigate to="/404" />} />
-      </Routes>
+          <Route path="/404" element={<Page404 />} />
+          <Route path="*" element={<Navigate to="/404" />} />
+        </Routes>
+      }
     </>
   );
 }

@@ -8,11 +8,13 @@ import {
     updateProfileSuccess,
     addCreditStart,
     addCreditSuccess,
-    addCreditFail
+    addCreditFail,
+    addExpenseFail
 } from './userSlice';
 import store from './store';
 import { populateAccount } from '../_mock/account'
 import { populateTransactions } from '../_mock/user';
+import { populateAccounts } from '../_mock/blog';
 
 const API_URI = "https://fixed-sunny-wood.glitch.me/"
 
@@ -26,6 +28,7 @@ const userService = {
         store.dispatch(loginSuccess(user)); // dispatch login success action with user object
         populateAccount(user)
         populateTransactions(user.expenses)
+        populateAccounts(user.accounts)
         return token;
     },
     async getUser(token) {
@@ -37,6 +40,7 @@ const userService = {
         store.dispatch(loginSuccess(user)); // dispatch login success action with user object
         populateAccount(user)
         populateTransactions(user.expenses)
+        populateAccounts(user.accounts)
         return Token;
     },
     async register(name, email, password, contact) {
@@ -117,6 +121,21 @@ const userService = {
         catch (error) {
             alert(error.response.data.message)
             store.dispatch(addCreditFail(error.response))
+        }
+    },
+    async editExpense(token, expenseId, name, amount, category, description, date) {
+        try {
+            store.dispatch(addExpenseStart())
+            const url = `${API_URI}editExpense`
+            const response = await axios.post(url, { token, expenseId, name, amount, category, description, date })
+            const { user } = response.data
+            populateTransactions(user.expenses)
+            store.dispatch(addExpenseSuccess(user))
+            alert("Expense edited successfully")
+        }
+        catch (error) {
+            store.dispatch(addExpenseFail(error))
+            alert(error.data.message || "Something went wrong")
         }
     }
 };
