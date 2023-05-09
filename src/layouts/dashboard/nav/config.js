@@ -23,8 +23,8 @@ const navConfig = [
     icon: icon('ic_analytics'),
   },
   {
-    title: 'Investments',
-    path: '/dashboard/investment',
+    title: 'Accounts',
+    path: '/dashboard/accounts',
     icon: <img src={suitcase} alt='suitcase' style={{ width: '1.5rem', height: '1.5rem', opacity: '0.5' }} />
   },
 ];

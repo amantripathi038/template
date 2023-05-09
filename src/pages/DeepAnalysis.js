@@ -26,7 +26,7 @@ export default function DashboardAppPage() {
                 </Typography>
                 <Grid item xs={12} md={6} lg={8}>
                     <AppConversionRates
-                        title="Monthwise Expenses"
+                        title="Month-wise Expenses"
                         subheader=""
                         chartData={monthGraphArray}
                         height={456}
@@ -63,7 +63,7 @@ export default function DashboardAppPage() {
                 <br />
                 <Grid item xs={12} md={6} lg={8}>
                     <AppConversionRates
-                        title="Categorywise Expenses (All Time)"
+                        title="Category-wise Expenses (All Time)"
                         subheader=""
                         chartData={[
                             { label: 'Bills', value: mapGraph3.get('Bills') || 0 },
