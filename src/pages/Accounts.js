@@ -9,6 +9,7 @@ import { BlogPostCard } from '../sections/@dashboard/blog';
 
 import AddAccountModal from './addAccountModal';
 import store from '../store/store';
+import FloatingButton from './FloatingButton';
 
 export default function BlogPage() {
   const [dialog, dialogOpen] = useState(false)
@@ -44,6 +45,8 @@ export default function BlogPage() {
             <BlogPostCard key={post._id} post={post} index={index} />
           ))}
         </Grid>
+
+        <FloatingButton />
       </Container>
     </>
   );
