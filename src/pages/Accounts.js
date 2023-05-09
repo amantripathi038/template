@@ -6,14 +6,14 @@ import { Grid, Button, Container, Stack, Typography } from '@mui/material';
 import Iconify from '../components/iconify';
 import { BlogPostCard } from '../sections/@dashboard/blog';
 // mock
-import POSTS from '../_mock/blog';
 
 import AddAccountModal from './addAccountModal';
-
+import store from '../store/store';
 
 export default function BlogPage() {
   const [dialog, dialogOpen] = useState(false)
-
+  const { accounts } = store.getState().user.user
+  const POSTS = accounts
   const handleDialogOpen = () => {
     dialogOpen(!dialog);
   };
@@ -41,7 +41,7 @@ export default function BlogPage() {
 
         <Grid container spacing={3}>
           {POSTS.map((post, index) => (
-            <BlogPostCard key={post.id} post={post} index={index} />
+            <BlogPostCard key={post._id} post={post} index={index} />
           ))}
         </Grid>
       </Container>

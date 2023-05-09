@@ -43,12 +43,12 @@ function getRandomColor() {
 }
 
 export default function BlogPostCard({ post }) {
-  const { title, type, amount, accountno } = post;
+  const { accountName, accountType, accountBalance, accountNumber } = post;
   const latestPostLarge = 0;
   const latestPost = 0;
 
   const POST_INFO = [
-    { number: type, icon: 'ic:baseline-currency-rupee' },
+    { number: accountType, icon: 'ic:baseline-currency-rupee' },
 
   ];
   const color = getRandomColor();
@@ -66,7 +66,7 @@ export default function BlogPostCard({ post }) {
           }}
         >
           <Typography gutterBottom variant="caption" sx={{ color: '#061B64', display: 'block' }} fontSize={"2vh"}>
-            <strong>{accountno}</strong>
+            <strong>{accountNumber}</strong>
           </Typography>
 
           <StyledTitle
@@ -81,7 +81,7 @@ export default function BlogPostCard({ post }) {
               }),
             }}
           >
-            {title}
+            {accountName}
           </StyledTitle>
           <StyledInfo>
             {POST_INFO.map((info, index) => (
@@ -101,7 +101,7 @@ export default function BlogPostCard({ post }) {
 
               >
 
-                <Typography variant="caption" fontSize={"2vh"}>{type}</Typography>
+                <Typography variant="caption" fontSize={"2vh"}>{accountType}</Typography>
               </Box>
             ))}
           </StyledInfo>
@@ -123,7 +123,7 @@ export default function BlogPostCard({ post }) {
 
               >
                 <Iconify icon={info.icon} sx={{ width: 16, height: 16, mr: 0.5 }} />
-                <Typography variant="caption" fontSize={"2vh"}>{fShortenNumber(amount)}</Typography>
+                <Typography variant="caption" fontSize={"2vh"}>{fShortenNumber(accountBalance)}</Typography>
               </Box>
             ))}
           </StyledInfo>

@@ -27,7 +27,7 @@ export default function AddAccountModal({ dialog, dialogOpen }) {
 
     const [isLoading, setIsLoading] = useState(false)
     const [addname, setName] = useState("")
-    const [addcategory, setCategory] = useState("")
+    const [addcategory, setCategory] = useState("Cash")
     const [addamount, setAmount] = useState(0)
     const [addnumber, setNumber] = useState("")
 
@@ -51,12 +51,16 @@ export default function AddAccountModal({ dialog, dialogOpen }) {
     const handleAmountChange = (event) => {
         setAmount(event.target.value)
     }
-    const handleAddTransaction = async () => {
+    const handleAddAccount = async () => {
+        if (!addamount || !addcategory || !addname) {
+            alert("Please fill complete details")
+            return
+        }
         setIsLoading(true)
         try {
             const token = localStorage.getItem('token') ? localStorage.getItem('token').slice(1, -1) : (sessionStorage.getItem('token') ? sessionStorage.getItem('token').slice(1, -1) : null);
-            // console.log(token, addname, addamount, addcategory, adddescription, adddate)
-            await userService.addExpense(token, addname, addamount, addcategory, addnumber)
+            // console.log(token, addname, addamount, addcategory, addnumber)
+            await userService.addAccount(token, addnumber, addname, addcategory, addamount)
             // const user = await userService.addExpense(token, name, amount, category, description, date);
         } catch (err) {
             console.error(err)
@@ -89,8 +93,10 @@ export default function AddAccountModal({ dialog, dialogOpen }) {
                     value={addname}
                     onChange={handleNameChange}
                     fullWidth
-                    variant="standard" />
-                <InputLabel id="demo-simple-select-label">Type</InputLabel>
+                    variant="standard"
+                    required
+                />
+                <InputLabel id="demo-simple-select-label" required>Type</InputLabel>
                 <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
@@ -113,11 +119,13 @@ export default function AddAccountModal({ dialog, dialogOpen }) {
                     value={addamount}
                     onChange={handleAmountChange}
                     fullWidth
-                    variant="standard" />
+                    variant="standard"
+                    required
+                />
             </DialogContent>
             <DialogActions>
                 <Button onClick={handleDialogClose}>Cancel</Button>
-                <LoadingButton onClick={handleAddTransaction} loading={isLoading}>Add</LoadingButton>
+                <LoadingButton onClick={handleAddAccount} loading={isLoading}>Add</LoadingButton>
             </DialogActions>
         </Dialog>
     )
