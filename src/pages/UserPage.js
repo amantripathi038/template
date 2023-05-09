@@ -162,7 +162,7 @@ export default function UserPage() {
   return (
     <>
       <Helmet>
-        <title> User | Budget Manager </title>
+        <title> Transactions | BudMan </title>
       </Helmet>
 
       <Container>

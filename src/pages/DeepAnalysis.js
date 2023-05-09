@@ -17,7 +17,7 @@ export default function DashboardAppPage() {
     return (
         <>
             <Helmet>
-                <title> Dashboard | Budget Manager </title>
+                <title> Deep Analysis | BudMan </title>
             </Helmet>
 
             <Container maxWidth="xl">

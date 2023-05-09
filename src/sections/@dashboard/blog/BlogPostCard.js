@@ -1,13 +1,12 @@
 import PropTypes from 'prop-types';
 // @mui
 import { styled } from '@mui/material/styles';
-import { Box, Link, Card, Grid, Typography, CardContent } from '@mui/material';
+import { Link, Card, Grid, Typography, CardContent } from '@mui/material';
 // utils
+import { useState } from 'react';
+import { LoadingButton } from '@mui/lab';
 import { fShortenNumber } from '../../../utils/formatNumber';
-//
-import Iconify from '../../../components/iconify';
-
-
+import userService from '../../../store/userService';
 
 // ----------------------------------------------------------------------
 
@@ -43,15 +42,24 @@ function getRandomColor() {
 }
 
 export default function BlogPostCard({ post }) {
-  const { accountName, accountType, accountBalance, accountNumber } = post;
+  const { accountName, accountType, accountBalance, accountNumber, _id } = post;
   const latestPostLarge = 0;
   const latestPost = 0;
-
-  const POST_INFO = [
-    { number: accountType, icon: 'ic:baseline-currency-rupee' },
-
-  ];
   const color = getRandomColor();
+  const [isLoading, setIsLoading] = useState(false)
+  const handleAccountDelete = async () => {
+    try {
+      setIsLoading(true)
+      const token = localStorage.getItem('token') ? localStorage.getItem('token').slice(1, -1) : (sessionStorage.getItem('token') ? sessionStorage.getItem('token').slice(1, -1) : null);
+      await userService.deleteAccount(token, _id)
+    }
+    catch (error) {
+      console.error(error)
+    }
+    finally {
+      setIsLoading(false)
+    }
+  }
   return (
     <Grid item xs={12} sm={latestPostLarge ? 12 : 6} md={latestPostLarge ? 6 : 4}>
       <Card sx={{ position: 'relative' }} style={{ background: color }}>
@@ -66,7 +74,7 @@ export default function BlogPostCard({ post }) {
           }}
         >
           <Typography gutterBottom variant="caption" sx={{ color: '#061B64', display: 'block' }} fontSize={"2vh"}>
-            <strong>{accountNumber}</strong>
+            <strong>{`Account Number: ${accountNumber}`}</strong>
           </Typography>
 
           <StyledTitle
@@ -84,48 +92,11 @@ export default function BlogPostCard({ post }) {
             {accountName}
           </StyledTitle>
           <StyledInfo>
-            {POST_INFO.map((info, index) => (
-              <Box
-                key={index}
-                sx={{
-                  display: 'flex',
-                  alignItems: 'left',
-                  color: '#061B64',
-
-
-                  // ml: index === 0 ? 0 : 1.5,
-                  ...((latestPostLarge || latestPost) && {
-                    color: '#061B64',
-                  }),
-                }}
-
-              >
-
-                <Typography variant="caption" fontSize={"2vh"}>{accountType}</Typography>
-              </Box>
-            ))}
+            <Typography variant="caption" fontSize={"2.5vh"} fontWeight={"bold"} color={"darkolivegreen"}>{accountType}</Typography>
           </StyledInfo>
-          <StyledInfo>
-            {POST_INFO.map((info, index) => (
-              <Box
-                key={index}
-                sx={{
-                  display: 'flex',
-                  alignItems: 'left',
-                  color: '#061B64',
-
-
-                  // ml: index === 0 ? 0 : 1.5,
-                  ...((latestPostLarge || latestPost) && {
-                    color: '#061B64',
-                  }),
-                }}
-
-              >
-                <Iconify icon={info.icon} sx={{ width: 16, height: 16, mr: 0.5 }} />
-                <Typography variant="caption" fontSize={"2vh"}>{fShortenNumber(accountBalance)}</Typography>
-              </Box>
-            ))}
+          <StyledInfo sx={{ display: 'flex', justifyContent: 'space-between' }}>
+            <Typography variant="caption" fontSize={"2.5vh"} color={"darkgreen"}><strong>{"₹ "}{fShortenNumber(accountBalance)}</strong></Typography>
+            <LoadingButton color='error' variant="text" onClick={handleAccountDelete} loading={isLoading}>Delete</LoadingButton>
           </StyledInfo>
         </CardContent>
       </Card>

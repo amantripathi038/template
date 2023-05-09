@@ -45,7 +45,7 @@ export default function LoginPage() {
   return (
     <>
       <Helmet>
-        <title> Login | Budget Manager </title>
+        <title> Login | BudMan </title>
       </Helmet>
 
       <StyledRoot>

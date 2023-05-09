@@ -151,6 +151,20 @@ const userService = {
             store.dispatch(addAccountFail(error))
             alert(error.data.message || "Something went wrong")
         }
+    },
+    async deleteAccount(token, accountId) {
+        try {
+            store.dispatch(addAccountStart())
+            const url = `${API_URI}deleteAccount`
+            const response = await axios.post(url, { token, accountId })
+            const { user } = response.data
+            store.dispatch(addAccountSuccess(user))
+            alert("Account deleted successfully")
+        }
+        catch (error) {
+            store.dispatch(addAccountFail(error))
+            alert(error.data.message || "Something went wrong")
+        }
     }
 };
 
