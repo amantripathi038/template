@@ -13,7 +13,7 @@ import DashboardAppPage from './pages/DashboardAppPage';
 import RegisterPage from './pages/RegisterPage';
 import userService from './store/userService';
 import DeepAnalysis from './pages/DeepAnalysis'
-import Investment from './pages/Investment'
+import Investment from './pages/Accounts'
 
 export default function Router() {
 

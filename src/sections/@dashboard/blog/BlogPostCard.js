@@ -9,6 +9,8 @@ import { fShortenNumber } from '../../../utils/formatNumber';
 import SvgColor from '../../../components/svg-color';
 import Iconify from '../../../components/iconify';
 
+
+
 // ----------------------------------------------------------------------
 
 const StyledCardMedia = styled('div')({
@@ -19,7 +21,7 @@ const StyledCardMedia = styled('div')({
 const StyledTitle = styled(Link)({
   height: 44,
   overflow: 'hidden',
-  WebkitLineClamp: 2,
+  WebkitLineClamp: 0,
   display: '-webkit-box',
   WebkitBoxOrient: 'vertical',
 });
@@ -34,10 +36,10 @@ const StyledAvatar = styled(Avatar)(({ theme }) => ({
 }));
 
 const StyledInfo = styled('div')(({ theme }) => ({
-  display: 'flex',
-  flexWrap: 'wrap',
-  justifyContent: 'flex-end',
-  marginTop: theme.spacing(3),
+  // display: 'flex',
+  // flexWrap: 'wrap',
+  justifyContent: 'left',
+  marginTop: theme.spacing(1),
   color: theme.palette.text.disabled,
 }));
 
@@ -56,21 +58,34 @@ BlogPostCard.propTypes = {
   index: PropTypes.number,
 };
 
+function getRandomColor() {
+  const letters = 'BCDEF'.split('');
+  let color = '#';
+  for (let i = 0; i < 6; i+=1 ) {
+      color += letters[Math.floor(Math.random() * letters.length)];
+  }
+  return color;
+}
+
 export default function BlogPostCard({ post, index }) {
-  const { cover, title, view, comment, share, author, createdAt } = post;
-  const latestPostLarge = index === 0;
-  const latestPost = index === 1 || index === 2;
+  const { cover, title, view, type, amount, author, accountno } = post;
+  const latestPostLarge = 0;
+  const latestPost = 0;
 
   const POST_INFO = [
-    { number: comment, icon: 'eva:message-circle-fill' },
-    { number: view, icon: 'eva:eye-fill' },
-    { number: share, icon: 'eva:share-fill' },
+    { number: type, icon: 'ic:baseline-currency-rupee' },
+    // { number: view, icon: 'eva:eye-fill' },
+    // { number: share, icon: 'eva:share-fill' },
   ];
-
+  const color = getRandomColor();
+  // console.log(color, " ")
   return (
-    <Grid item xs={12} sm={latestPostLarge ? 12 : 6} md={latestPostLarge ? 6 : 3}>
-      <Card sx={{ position: 'relative' }}>
-        <StyledCardMedia
+    <Grid item xs={12} sm={latestPostLarge ? 12 : 6} md={latestPostLarge ? 6 : 4}>
+      <Card sx={{ position: 'relative' }} style={{ background: color }}>
+
+
+{/* linear-gradient(90deg, #081b37, #092850, #08356b, #084287, #0b50a4, #115ec2, #1b6de0, #277bff) */}
+         {/* <StyledCardMedia
           sx={{
             ...((latestPostLarge || latestPost) && {
               pt: 'calc(100% * 4 / 3)',
@@ -90,8 +105,8 @@ export default function BlogPostCard({ post, index }) {
               },
             }),
           }}
-        >
-          <SvgColor
+        > 
+          {/* <SvgColor
             color="paper"
             src="/assets/icons/shape-avatar.svg"
             sx={{
@@ -101,10 +116,13 @@ export default function BlogPostCard({ post, index }) {
               bottom: -15,
               position: 'absolute',
               color: 'background.paper',
-              ...((latestPostLarge || latestPost) && { display: 'none' }),
+              ...((latestPostLarge || latestPost) && { 
+                display: 'none' 
+              }),
             }}
-          />
-          <StyledAvatar
+          /> */}
+          {/*
+           <StyledAvatar
             alt={author.name}
             src={author.avatarUrl}
             sx={{
@@ -116,10 +134,10 @@ export default function BlogPostCard({ post, index }) {
                 height: 40,
               }),
             }}
-          />
-
+          /> 
+          
           <StyledCover alt={title} src={cover} />
-        </StyledCardMedia>
+        </StyledCardMedia>  */}
 
         <CardContent
           sx={{
@@ -131,39 +149,65 @@ export default function BlogPostCard({ post, index }) {
             }),
           }}
         >
-          <Typography gutterBottom variant="caption" sx={{ color: 'text.disabled', display: 'block' }}>
-            {fDate(createdAt)}
+          <Typography gutterBottom variant="caption" sx={{ color: '#061B64', display: 'block' }}>
+            {accountno}
           </Typography>
 
           <StyledTitle
-            color="inherit"
+            
             variant="subtitle2"
-            underline="hover"
+            underline="none"
+            color="#061B64"
             sx={{
               ...(latestPostLarge && { typography: 'h5', height: 60 }),
               ...((latestPostLarge || latestPost) && {
-                color: 'common.white',
+                color: '#061B64',
               }),
             }}
           >
             {title}
           </StyledTitle>
-
           <StyledInfo>
             {POST_INFO.map((info, index) => (
               <Box
                 key={index}
                 sx={{
                   display: 'flex',
-                  alignItems: 'center',
-                  ml: index === 0 ? 0 : 1.5,
+                  alignItems: 'left',
+                  color:'#061B64',
+                  
+                  
+                  // ml: index === 0 ? 0 : 1.5,
                   ...((latestPostLarge || latestPost) && {
-                    color: 'grey.500',
+                    color: '#061B64',
                   }),
                 }}
+                
+              >
+                
+                <Typography variant="caption">{type}</Typography>
+              </Box>
+            ))}
+          </StyledInfo>
+          <StyledInfo>
+            {POST_INFO.map((info, index) => (
+              <Box
+                key={index}
+                sx={{
+                  display: 'flex',
+                  alignItems: 'left',
+                  color:'#061B64',
+                  
+                  
+                  // ml: index === 0 ? 0 : 1.5,
+                  ...((latestPostLarge || latestPost) && {
+                    color: '#061B64',
+                  }),
+                }}
+                
               >
                 <Iconify icon={info.icon} sx={{ width: 16, height: 16, mr: 0.5 }} />
-                <Typography variant="caption">{fShortenNumber(info.number)}</Typography>
+                <Typography variant="caption">{fShortenNumber(amount)}</Typography>
               </Box>
             ))}
           </StyledInfo>
