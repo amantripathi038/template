@@ -1,11 +1,8 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-// layouts
 import { CircularProgress } from '@mui/material';
-
 import DashboardLayout from './layouts/dashboard';
-
 import UserPage from './pages/UserPage';
 import LoginPage from './pages/LoginPage';
 import Page404 from './pages/Page404';
@@ -52,7 +49,6 @@ export default function Router() {
           <Route path="/" element={<Navigate to="/dashboard/app" />} />
           <Route path="/login" element={!user ? <LoginPage /> : <Navigate to="/dashboard/app" />} />
           <Route path="/register" element={!user ? <RegisterPage /> : <Navigate to="/dashboard/app" />} />
-
           <Route
             path="/dashboard"
             element={user ? <DashboardLayout /> : <Navigate to="/login" />}
@@ -63,7 +59,6 @@ export default function Router() {
             <Route path="accounts" element={<Accounts />} />
             <Route path="goals" element={<Goals />} />
           </Route>
-
           <Route path="/404" element={<Page404 />} />
           <Route path="*" element={<Navigate to="/404" />} />
         </Routes>

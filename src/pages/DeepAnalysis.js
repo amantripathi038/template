@@ -1,13 +1,9 @@
 import { Helmet } from 'react-helmet-async';
-
 import { Grid, Container, Typography } from '@mui/material';
-// components
-
 import {
     AppConversionRates,
     AppWebsiteVisits
 } from '../sections/@dashboard/app';
-
 import { monthGraphArray, mapGraph3, thisMonthArray, previousMonthArray, prePreviousMonthArray, dateLabels } from '../_mock/user';
 import FloatingButton from './FloatingButton';
 // ----------------------------------------------------------------------

@@ -10,14 +10,12 @@ export default function FloatingButton() {
     const [creditToggle, setCreditToggle] = useState(false)
     const [salary, setSalary] = useState(0)
     const [isLoading, setIsLoading] = useState(false)
-
     const handleSalaryChange = (event) => {
         setSalary(event.target.value)
     }
     const creditToggler = () => {
         setCreditToggle(!creditToggle)
     }
-
     const handleAddCredit = async () => {
         setIsLoading(true)
         const token = localStorage.getItem('token') ? localStorage.getItem('token').slice(1, -1) : (sessionStorage.getItem('token') ? sessionStorage.getItem('token').slice(1, -1) : null);
@@ -25,13 +23,10 @@ export default function FloatingButton() {
         setIsLoading(false)
         creditToggler()
     }
-
     const [dialog, dialogOpen] = useState(false)
-
     const handleDialogOpen = () => {
         dialogOpen(!dialog);
     };
-
 
     return (
         <>

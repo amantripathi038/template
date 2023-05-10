@@ -1,33 +1,11 @@
 import { useState } from 'react';
-// @mui
 import { alpha } from '@mui/material/styles';
 import { Box, Divider, Typography, Stack, MenuItem, Avatar, IconButton, Popover, Dialog, DialogTitle, DialogContent, TextField, Button, DialogActions } from '@mui/material';
-// mocks_
 import { LoadingButton } from '@mui/lab';
-
 import { useNavigate } from 'react-router-dom';
 import userService from '../../../store/userService';
 import account from '../../../_mock/account';
 import Iconify from '../../../components/iconify'
-
-// ----------------------------------------------------------------------
-
-// const MENU_OPTIONS = [
-//   {
-//     label: 'Home',
-//     icon: 'eva:home-fill',
-//   },
-//   {
-//     label: 'Profile',
-//     icon: 'eva:person-fill',
-//   },
-//   {
-//     label: 'Settings',
-//     icon: 'eva:settings-2-fill',
-//   },
-// ];
-
-// ----------------------------------------------------------------------
 
 export default function AccountPopover() {
   const [open, setOpen] = useState(null);
@@ -89,7 +67,6 @@ export default function AccountPopover() {
     await userService.logout()
     navigate('/login', { replace: true });
   }
-
 
   const [settingOpen, setSettingOpen] = useState(false)
   const [oldPassword, setOldPassword] = useState("")

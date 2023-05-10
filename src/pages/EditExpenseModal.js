@@ -52,9 +52,7 @@ export default function EditExpenseModal({ dialog, dialogOpen, row }) {
         setIsLoading(true)
         try {
             const token = localStorage.getItem('token') ? localStorage.getItem('token').slice(1, -1) : (sessionStorage.getItem('token') ? sessionStorage.getItem('token').slice(1, -1) : null);
-            // console.log(token, addname, addamount, addcategory, adddescription, adddate)
             await userService.editExpense(token, row._id, addname, addamount, addcategory, adddescription, adddate)
-            // const user = await userService.addExpense(token, name, amount, category, description, date);
         } catch (err) {
             console.error(err)
         } finally {

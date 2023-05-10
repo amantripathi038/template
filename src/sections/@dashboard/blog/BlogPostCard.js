@@ -41,8 +41,6 @@ function getRandomColor() {
 
 export default function BlogPostCard({ post }) {
   const { accountName, accountType, accountBalance, accountNumber, _id } = post;
-  const latestPostLarge = 0;
-  const latestPost = 0;
   const color = getRandomColor();
   const [isLoading, setIsLoading] = useState(false)
   const handleAccountDelete = async () => {
@@ -59,18 +57,9 @@ export default function BlogPostCard({ post }) {
     }
   }
   return (
-    <Grid item xs={12} sm={latestPostLarge ? 12 : 6} md={latestPostLarge ? 6 : 4}>
+    <Grid item xs={12} sm={6} md={4}>
       <Card sx={{ position: 'relative' }} style={{ background: color }}>
-        <CardContent
-          sx={{
-            pt: 4,
-            ...((latestPostLarge || latestPost) && {
-              bottom: 0,
-              width: '100%',
-              position: 'absolute',
-            }),
-          }}
-        >
+        <CardContent sx={{ pt: 4 }} >
           <Typography gutterBottom variant="caption" sx={{ color: '#061B64', display: 'block' }} fontSize={"2vh"}>
             <strong>{`Account Number: ${accountNumber}`}</strong>
           </Typography>
@@ -80,12 +69,6 @@ export default function BlogPostCard({ post }) {
             variant="subtitle2"
             underline="none"
             color="#061B64"
-            sx={{
-              ...(latestPostLarge && { typography: 'h5', height: 60 }),
-              ...((latestPostLarge || latestPost) && {
-                color: '#061B64',
-              }),
-            }}
           >
             {accountName}
           </StyledTitle>

@@ -1,27 +1,13 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-
-import {
-    Button,
-    Dialog,
-    DialogActions,
-    DialogTitle,
-    DialogContent,
-    DialogContentText,
-    TextField,
-    Select,
-    InputLabel,
-    MenuItem
-} from '@mui/material';
+import { Button, Dialog, DialogActions, DialogTitle, DialogContent, DialogContentText, TextField, Select, InputLabel, MenuItem } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
-
 import userService from '../store/userService';
 
 AddExpenseModal.propTypes = {
     dialog: PropTypes.bool.isRequired,
     dialogOpen: PropTypes.func.isRequired,
 };
-
 
 export default function AddExpenseModal({ dialog, dialogOpen }) {
 
@@ -60,9 +46,7 @@ export default function AddExpenseModal({ dialog, dialogOpen }) {
         setIsLoading(true)
         try {
             const token = localStorage.getItem('token') ? localStorage.getItem('token').slice(1, -1) : (sessionStorage.getItem('token') ? sessionStorage.getItem('token').slice(1, -1) : null);
-            // console.log(token, addname, addamount, addcategory, adddescription, adddate)
             await userService.addExpense(token, addname, addamount, addcategory, adddescription, adddate)
-            // const user = await userService.addExpense(token, name, amount, category, description, date);
         } catch (err) {
             console.error(err)
         } finally {
