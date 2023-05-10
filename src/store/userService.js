@@ -12,7 +12,10 @@ import {
     addExpenseFail,
     addAccountStart,
     addAccountFail,
-    addAccountSuccess
+    addAccountSuccess,
+    goalStatusChangeSuccess,
+    addSavedAmountSuccess,
+    addGoalSuccess
 } from './userSlice';
 import store from './store';
 import { populateAccount } from '../_mock/account'
@@ -163,6 +166,42 @@ const userService = {
         }
         catch (error) {
             store.dispatch(addAccountFail(error))
+            alert(error.data.message || "Something went wrong")
+        }
+    },
+    async changeGoalStatus(token, goalId, status) {
+        try {
+            const url = `${API_URI}changeGoalStatus`
+            const response = await axios.post(url, { token, goalId, status })
+            const { user, message } = response.data
+            store.dispatch(goalStatusChangeSuccess(user))
+            alert(message)
+        }
+        catch (error) {
+            alert(error.data.message || "Something went wrong")
+        }
+    },
+    async addSavedAmount(token, goalId, amount) {
+        try {
+            const url = `${API_URI}addSavedAmount`
+            const response = await axios.post(url, { token, goalId, amount })
+            const { user, message } = response.data
+            store.dispatch(addSavedAmountSuccess(user))
+            alert(message)
+        }
+        catch (error) {
+            alert(error.data.message || "Something went wrong")
+        }
+    },
+    async addGoal(token, goalName, targetAmount, savedAmount, desiredDate) {
+        try {
+            const url = `${API_URI}addGoal`
+            const response = await axios.post(url, { token, goalName, targetAmount, savedAmount, desiredDate })
+            const { user, message } = response.data
+            store.dispatch(addGoalSuccess(user))
+            alert(message)
+        }
+        catch (error) {
             alert(error.data.message || "Something went wrong")
         }
     }

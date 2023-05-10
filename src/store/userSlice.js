@@ -107,6 +107,15 @@ export const userSlice = createSlice({
         addAccountFail: (state, error) => {
             state.isLoading = false
             state.error = error
+        },
+        goalStatusChangeSuccess: (state, action) => {
+            state.user = action.payload
+        },
+        addSavedAmountSuccess: (state, action) => {
+            state.user = action.payload
+        },
+        addGoalSuccess: (state, action) => {
+            state.user = action.payload
         }
     }
 });
@@ -115,6 +124,6 @@ export const { loginStart, loginSuccess, loginFail, registerStart, registerSucce
     addExpenseStart, addExpenseFail, addExpenseSuccess, removeExpenseStart, removeExpenseFail, removeExpenseSuccess,
     changePasswordStart, changePasswordSuccess, changePasswordFail,
     updateProfileStart, updateProfileSuccess, updateProfileFail, addCreditStart, addCreditSuccess, addCreditFail,
-    addAccountStart, addAccountFail, addAccountSuccess } = userSlice.actions;
+    addAccountStart, addAccountFail, addAccountSuccess, goalStatusChangeSuccess, addSavedAmountSuccess, addGoalSuccess } = userSlice.actions;
 
 export default userSlice.reducer

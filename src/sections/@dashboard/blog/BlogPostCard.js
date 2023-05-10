@@ -21,8 +21,6 @@ const StyledTitle = styled(Link)({
 
 
 const StyledInfo = styled('div')(({ theme }) => ({
-  // display: 'flex',
-  // flexWrap: 'wrap',
   justifyContent: 'left',
   marginTop: theme.spacing(1),
   color: theme.palette.text.disabled,

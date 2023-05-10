@@ -14,6 +14,7 @@ import RegisterPage from './pages/RegisterPage';
 import userService from './store/userService';
 import DeepAnalysis from './pages/DeepAnalysis'
 import Accounts from './pages/Accounts'
+import Goals from './pages/Goals';
 
 export default function Router() {
 
@@ -60,6 +61,7 @@ export default function Router() {
             <Route path="user" element={<UserPage />} />
             <Route path="analysis" element={<DeepAnalysis />} />
             <Route path="accounts" element={<Accounts />} />
+            <Route path="goals" element={<Goals />} />
           </Route>
 
           <Route path="/404" element={<Page404 />} />

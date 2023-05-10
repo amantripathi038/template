@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { Grid, Button, Container, Stack, Typography } from '@mui/material';
 // components
 import Iconify from '../components/iconify';
-import { BlogPostCard } from '../sections/@dashboard/blog';
+import BlogPostCard from '../sections/@dashboard/blog/BlogPostCard';
 // mock
 
 import AddAccountModal from './addAccountModal';

@@ -2,6 +2,7 @@
 import SvgColor from '../../../components/svg-color';
 import suitcase from './suitcase.png'
 import transaction from './transaction.png';
+import target from './target.png'
 // ----------------------------------------------------------------------
 
 const icon = (name) => <SvgColor src={`/assets/icons/navbar/${name}.svg`} sx={{ width: 1, height: 1 }} />;
@@ -27,6 +28,11 @@ const navConfig = [
     path: '/dashboard/accounts',
     icon: <img src={suitcase} alt='suitcase' style={{ width: '1.5rem', height: '1.5rem', opacity: '0.5' }} />
   },
+  {
+    title: 'Goals',
+    path: '/dashboard/goals',
+    icon: <img src={target} alt='target' style={{ width: '1.5rem', height: '1.5rem', opacity: '0.5' }} />
+  }
 ];
 
 export default navConfig;
