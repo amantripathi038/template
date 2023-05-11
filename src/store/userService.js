@@ -56,12 +56,17 @@ const userService = {
         return user;
     },
     async addExpense(token, name, amount, category, description, date) {
-        store.dispatch(addExpenseStart())
-        const url = `${API_URI}addExpense`
-        const response = await axios.post(url, { token, name, amount, category, description, date })
-        const { user } = response.data
-        populateTransactions(user.expenses)
-        store.dispatch(addExpenseSuccess(user))
+        try {
+            store.dispatch(addExpenseStart())
+            const url = `${API_URI}addExpense`
+            const response = await axios.post(url, { token, name, amount, category, description, date })
+            const { user } = response.data
+            populateTransactions(user.expenses)
+            store.dispatch(addExpenseSuccess(user))
+        }
+        catch (error) {
+            alert(error.response.data.message || "Something went wrong")
+        }
     },
     async removeExpense(id, token) {
         store.dispatch(removeExpenseStart())

@@ -134,7 +134,7 @@ export default function GoalCard({ goal }) {
                     <StyledInfo sx={{ display: 'flex', justifyContent: 'center' }}>
                         {goalStatus === 'active' &&
                             <>
-                                <Tooltip title="Add Saved Amount"><LoadingButton variant="text" onClick={creditToggler} color='warning'><ControlPointOutlined /></LoadingButton></Tooltip>
+                                <Tooltip title="Add Saved Amount"><LoadingButton variant="text" onClick={creditToggler} color='warning' loading={isLoading}><ControlPointOutlined /></LoadingButton></Tooltip>
                                 <Tooltip title="Pause Goal"><LoadingButton variant="text" onClick={() => handleGoalStatus('pause')} loading={isLoading}><PauseCircle /></LoadingButton></Tooltip>
                                 <Tooltip title="Complete Goal"><LoadingButton color='success' variant="text" onClick={() => handleGoalStatus('complete')} loading={isLoading}><Verified /></LoadingButton></Tooltip>
                             </>
