@@ -3,10 +3,10 @@ import { useState } from 'react';
 // @mui
 import { Grid, Button, Container, Stack, Typography } from '@mui/material';
 // components
+import { Slide } from 'react-reveal';
 import Iconify from '../components/iconify';
 import BlogPostCard from '../sections/@dashboard/blog/BlogPostCard';
 // mock
-
 import AddAccountModal from './addAccountModal';
 import store from '../store/store';
 import FloatingButton from './FloatingButton';
@@ -34,11 +34,13 @@ export default function BlogPage() {
           </Button>
           <AddAccountModal dialog={dialog} dialogOpen={dialogOpen} />
         </Stack>
-        <Grid container spacing={3}>
-          {POSTS.map((post, index) => (
-            <BlogPostCard key={post._id} post={post} index={index} />
-          ))}
-        </Grid>
+        <Slide right>
+          <Grid container spacing={3}>
+            {POSTS.map((post, index) => (
+              <BlogPostCard key={post._id} post={post} index={index} />
+            ))}
+          </Grid>
+        </Slide>
         <FloatingButton />
       </Container>
     </>

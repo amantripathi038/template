@@ -1,5 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 import { Grid, Container, Typography } from '@mui/material';
+import { Slide } from 'react-reveal'
 import {
     AppConversionRates,
     AppWebsiteVisits
@@ -30,46 +31,50 @@ export default function DashboardAppPage() {
                 </Grid>
                 <br />
                 <Grid item xs={12} md={6} lg={8}>
-                    <AppWebsiteVisits
-                        title="Compare Expenses"
-                        subheader=""
-                        chartLabels={dateLabels}
-                        chartData={[
-                            {
-                                name: 'This Month',
-                                type: 'bar',
-                                fill: 'solid',
-                                data: thisMonthArray,
-                            },
-                            {
-                                name: 'Previous Month',
-                                type: 'area',
-                                fill: 'gradient',
-                                data: previousMonthArray,
-                            },
-                            {
-                                name: 'Pre-Previous Month',
-                                type: 'line',
-                                fill: 'solid',
-                                data: prePreviousMonthArray,
-                            },
-                        ]}
-                    />
+                    <Slide right>
+                        <AppWebsiteVisits
+                            title="Compare Expenses"
+                            subheader=""
+                            chartLabels={dateLabels}
+                            chartData={[
+                                {
+                                    name: 'This Month',
+                                    type: 'bar',
+                                    fill: 'solid',
+                                    data: thisMonthArray,
+                                },
+                                {
+                                    name: 'Previous Month',
+                                    type: 'area',
+                                    fill: 'gradient',
+                                    data: previousMonthArray,
+                                },
+                                {
+                                    name: 'Pre-Previous Month',
+                                    type: 'line',
+                                    fill: 'solid',
+                                    data: prePreviousMonthArray,
+                                },
+                            ]}
+                        />
+                    </Slide>
                 </Grid>
                 <br />
                 <Grid item xs={12} md={6} lg={8}>
-                    <AppConversionRates
-                        title="Category-wise Expenses (All Time)"
-                        subheader=""
-                        chartData={[
-                            { label: 'Bills', value: mapGraph3.get('Bills') || 0 },
-                            { label: 'Food', value: mapGraph3.get('Food') || 0 },
-                            { label: 'Medical', value: mapGraph3.get('Medical') || 0 },
-                            { label: 'Travel', value: mapGraph3.get('Travel') || 0 },
-                            { label: 'Others', value: mapGraph3.get('Others') || 0 },
-                        ]}
-                        height={230}
-                    />
+                    <Slide left>
+                        <AppConversionRates
+                            title="Category-wise Expenses (All Time)"
+                            subheader=""
+                            chartData={[
+                                { label: 'Bills', value: mapGraph3.get('Bills') || 0 },
+                                { label: 'Food', value: mapGraph3.get('Food') || 0 },
+                                { label: 'Medical', value: mapGraph3.get('Medical') || 0 },
+                                { label: 'Travel', value: mapGraph3.get('Travel') || 0 },
+                                { label: 'Others', value: mapGraph3.get('Others') || 0 },
+                            ]}
+                            height={230}
+                        />
+                    </Slide>
                 </Grid>
             </Container>
             <FloatingButton />

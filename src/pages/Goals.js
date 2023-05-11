@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Container, Typography, Box, Tabs, Tab, Button, Stack, Divider, Grid, Dialog, DialogActions, TextField, DialogTitle, DialogContent, DialogContentText } from '@mui/material';
 import { TabPanel, TabContext, LoadingButton } from '@mui/lab'
+import { Fade } from 'react-reveal'
 import Iconify from '../components/iconify';
 import FloatingButton from './FloatingButton';
 import store from '../store/store';
@@ -56,43 +57,45 @@ export default function Goals() {
                         New Goal
                     </Button>
                 </Stack>
-                <TabContext value={value}>
-                    <Box sx={{ width: '100%', bgcolor: 'background.paper' }}>
-                        <Tabs value={value} onChange={handleChange} centered>
-                            <Tab label="Active" value="1" />
-                            <Tab label="Paused" value="2" />
-                            <Tab label="Completed" value="3" />
-                        </Tabs>
-                        <Divider />
-                        <TabPanel value="1">
-                            <Grid container spacing={3}>
-                                {goals
-                                    .filter(goal => goal.goalStatus === 'active')
-                                    .map((goal, index) => (
-                                        <GoalCard key={goal._id} goal={goal} index={index} />
-                                    ))}
-                            </Grid>
-                        </TabPanel>
-                        <TabPanel value="2">
-                            <Grid container spacing={3}>
-                                {goals
-                                    .filter(goal => goal.goalStatus === 'paused')
-                                    .map((goal, index) => (
-                                        <GoalCard key={goal._id} goal={goal} index={index} />
-                                    ))}
-                            </Grid>
-                        </TabPanel>
-                        <TabPanel value="3">
-                            <Grid container spacing={3}>
-                                {goals
-                                    .filter(goal => goal.goalStatus === 'completed')
-                                    .map((goal, index) => (
-                                        <GoalCard key={goal._id} goal={goal} index={index} />
-                                    ))}
-                            </Grid>
-                        </TabPanel>
-                    </Box>
-                </TabContext>
+                <Fade>
+                    <TabContext value={value}>
+                        <Box sx={{ width: '100%', bgcolor: 'background.paper' }}>
+                            <Tabs value={value} onChange={handleChange} centered>
+                                <Tab label="Active" value="1" />
+                                <Tab label="Paused" value="2" />
+                                <Tab label="Completed" value="3" />
+                            </Tabs>
+                            <Divider />
+                            <TabPanel value="1">
+                                <Grid container spacing={3}>
+                                    {goals
+                                        .filter(goal => goal.goalStatus === 'active')
+                                        .map((goal, index) => (
+                                            <GoalCard key={goal._id} goal={goal} index={index} />
+                                        ))}
+                                </Grid>
+                            </TabPanel>
+                            <TabPanel value="2">
+                                <Grid container spacing={3}>
+                                    {goals
+                                        .filter(goal => goal.goalStatus === 'paused')
+                                        .map((goal, index) => (
+                                            <GoalCard key={goal._id} goal={goal} index={index} />
+                                        ))}
+                                </Grid>
+                            </TabPanel>
+                            <TabPanel value="3">
+                                <Grid container spacing={3}>
+                                    {goals
+                                        .filter(goal => goal.goalStatus === 'completed')
+                                        .map((goal, index) => (
+                                            <GoalCard key={goal._id} goal={goal} index={index} />
+                                        ))}
+                                </Grid>
+                            </TabPanel>
+                        </Box>
+                    </TabContext>
+                </Fade>
 
                 <Dialog open={dialog} onClose={handleDialogOpen}>
                     <DialogTitle>Add Goal</DialogTitle>
