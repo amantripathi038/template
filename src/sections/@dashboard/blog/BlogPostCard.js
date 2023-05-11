@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 // @mui
 import { styled } from '@mui/material/styles';
-import { Link, Card, Grid, Typography, CardContent } from '@mui/material';
+import { Link, Card, Grid, Typography, CardContent, Tooltip } from '@mui/material';
 // utils
 import { useState } from 'react';
 import { LoadingButton } from '@mui/lab';
@@ -30,18 +30,9 @@ BlogPostCard.propTypes = {
   post: PropTypes.object.isRequired,
 };
 
-function getRandomColor() {
-  const letters = 'BCDEF'.split('');
-  let color = '#';
-  for (let i = 0; i < 6; i += 1) {
-    color += letters[Math.floor(Math.random() * letters.length)];
-  }
-  return color;
-}
-
 export default function BlogPostCard({ post }) {
   const { accountName, accountType, accountBalance, accountNumber, _id } = post;
-  const color = getRandomColor();
+  const color = "linear-gradient(to right, #ff8a80, #fce4ec)";
   const [isLoading, setIsLoading] = useState(false)
   const handleAccountDelete = async () => {
     try {
@@ -77,7 +68,7 @@ export default function BlogPostCard({ post }) {
           </StyledInfo>
           <StyledInfo sx={{ display: 'flex', justifyContent: 'space-between' }}>
             <Typography variant="caption" fontSize={"2.5vh"} color={"darkgreen"}><strong>{"₹ "}{fShortenNumber(accountBalance)}</strong></Typography>
-            <LoadingButton color='error' variant="text" onClick={handleAccountDelete} loading={isLoading}>Delete</LoadingButton>
+            <Tooltip title="Delete Account"><LoadingButton color='error' variant="text" onClick={handleAccountDelete} loading={isLoading}>Delete</LoadingButton></Tooltip>
           </StyledInfo>
         </CardContent>
       </Card>

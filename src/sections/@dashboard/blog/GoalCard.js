@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
 // @mui
 import { styled } from '@mui/material/styles';
-import { Link, Card, Grid, Typography, CardContent, CircularProgress, Box, Button, Dialog, DialogTitle, DialogContent, TextField, DialogActions } from '@mui/material';
+import { Link, Card, Grid, Typography, CardContent, CircularProgress, Box, Button, Dialog, DialogTitle, DialogContent, TextField, DialogActions, Tooltip } from '@mui/material';
 // utils
 import { useState } from 'react';
 import { LoadingButton } from '@mui/lab';
-import { Delete, PauseCircle, PlayCircle, Verified } from '@mui/icons-material';
+import { ControlPointOutlined, Delete, PauseCircle, PlayCircle, Verified } from '@mui/icons-material';
 import userService from '../../../store/userService';
 
 // ----------------------------------------------------------------------
@@ -30,11 +30,16 @@ GoalCard.propTypes = {
     goal: PropTypes.object.isRequired,
 };
 
-function getRandomColor() {
-    const letters = 'BCDEF'.split('');
-    let color = '#';
-    for (let i = 0; i < 6; i += 1) {
-        color += letters[Math.floor(Math.random() * letters.length)];
+function getRandomColor(status) {
+    let color = "linear-gradient(to right, #ff8a80, #ff80ab)"
+    if (status === 'active') {
+        color = "linear-gradient(to right, #29b6f6, #b2ebf2)"
+    }
+    if (status === 'paused') {
+        color = "linear-gradient(to right, #ff8a80, #ff80ab)"
+    }
+    if (status === 'completed') {
+        color = "linear-gradient(to right, #64ffda, #18ffff)"
     }
     return color;
 }
@@ -46,6 +51,7 @@ CircularProgressWithLabel.propTypes = {
 }
 
 function CircularProgressWithLabel(props) {
+    const title = `Remaining Amount: ${props.targetAmount - props.savedAmount > 0 ? props.targetAmount - props.savedAmount : 0}`
     return (
         <Box sx={{ position: 'relative', display: 'inline-flex' }}>
             <CircularProgress variant="determinate" {...props} size={'28vh'} style={{ border: '0.6vh solid', borderRadius: '100vh', borderColor: 'GrayText' }} />
@@ -61,13 +67,15 @@ function CircularProgressWithLabel(props) {
                     justifyContent: 'center',
                 }}
             >
-                <Typography variant="h3" component="div">
-                    {`${Math.round(props.value)}%`}
-                    <br />
-                    <Typography variant='caption' component='div' color='text-secondary'>
-                        {`${props.savedAmount} / ${props.targetAmount}`}
+                <Tooltip title={title}>
+                    <Typography variant="h3" component="div">
+                        {`${Math.round(props.value)}%`}
+                        <br />
+                        <Typography variant='caption' component='div' color='text-secondary'>
+                            {`${props.savedAmount} / ${props.targetAmount}`}
+                        </Typography>
                     </Typography>
-                </Typography>
+                </Tooltip>
             </Box>
         </Box>
     );
@@ -75,7 +83,7 @@ function CircularProgressWithLabel(props) {
 
 export default function GoalCard({ goal }) {
     const { goalName, desiredDate, savedAmount, targetAmount, goalStatus, _id } = goal;
-    const color = getRandomColor();
+    const color = getRandomColor(goalStatus);
     const [isLoading, setIsLoading] = useState(false)
     const [amount, setAmount] = useState(0)
 
@@ -126,20 +134,19 @@ export default function GoalCard({ goal }) {
                     <StyledInfo sx={{ display: 'flex', justifyContent: 'center' }}>
                         {goalStatus === 'active' &&
                             <>
-                                <LoadingButton variant="text" onClick={() => handleGoalStatus('pause')} loading={isLoading}><PauseCircle /></LoadingButton>
-                                <LoadingButton color='success' variant="text" onClick={() => handleGoalStatus('complete')} loading={isLoading}><Verified /></LoadingButton>
+                                <Tooltip title="Add Saved Amount"><LoadingButton variant="text" onClick={creditToggler} color='warning'><ControlPointOutlined /></LoadingButton></Tooltip>
+                                <Tooltip title="Pause Goal"><LoadingButton variant="text" onClick={() => handleGoalStatus('pause')} loading={isLoading}><PauseCircle /></LoadingButton></Tooltip>
+                                <Tooltip title="Complete Goal"><LoadingButton color='success' variant="text" onClick={() => handleGoalStatus('complete')} loading={isLoading}><Verified /></LoadingButton></Tooltip>
                             </>
                         }
                         {goalStatus === 'paused' &&
                             <>
-                                <LoadingButton variant="text" onClick={() => handleGoalStatus('active')} loading={isLoading}><PlayCircle /></LoadingButton>
-                                <LoadingButton color='success' variant="text" onClick={() => handleGoalStatus('complete')} loading={isLoading}><Verified /></LoadingButton>
+                                <Tooltip title="Activate Goal"><LoadingButton variant="text" onClick={() => handleGoalStatus('active')} loading={isLoading}><PlayCircle /></LoadingButton></Tooltip>
+                                <Tooltip title="Complete Goal"><LoadingButton color='success' variant="text" onClick={() => handleGoalStatus('complete')} loading={isLoading}><Verified /></LoadingButton></Tooltip>
                             </>
                         }
-                        <LoadingButton color='error' variant="text" onClick={() => handleGoalStatus('delete')} loading={isLoading}><Delete /></LoadingButton>
+                        <Tooltip title="Delete Goal"><LoadingButton color='error' variant="text" onClick={() => handleGoalStatus('delete')} loading={isLoading}><Delete /></LoadingButton></Tooltip>
                     </StyledInfo>
-                    <br />
-                    {goalStatus === 'active' && <center><Button variant="contained" onClick={creditToggler}>Add Saved Amount</Button></center>}
                 </CardContent>
             </Card>
             <Dialog open={creditToggle} onClose={creditToggler}>
