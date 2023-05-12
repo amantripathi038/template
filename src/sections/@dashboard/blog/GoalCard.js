@@ -36,10 +36,10 @@ function getRandomColor(status) {
         color = "linear-gradient(to right, #29b6f6, #b2ebf2)"
     }
     if (status === 'paused') {
-        color = "linear-gradient(to right, #ff8a80, #ff80ab)"
+        color = "linear-gradient(to right, #ff8a80, #ffcdd2)"
     }
     if (status === 'completed') {
-        color = "linear-gradient(to right, #64ffda, #18ffff)"
+        color = "linear-gradient(to right, #64ffda, #e3f2fd)"
     }
     return color;
 }

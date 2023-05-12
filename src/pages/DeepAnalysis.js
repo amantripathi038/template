@@ -39,7 +39,7 @@ export default function DashboardAppPage() {
                             chartData={[
                                 {
                                     name: 'This Month',
-                                    type: 'bar',
+                                    type: 'line',
                                     fill: 'solid',
                                     data: thisMonthArray,
                                 },
